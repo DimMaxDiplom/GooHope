@@ -1,4 +1,4 @@
-# commercial-store
+# GooHope
 
 Инструкция по запуску проекта:
 
@@ -12,10 +12,10 @@
  Развёрнутый проект можно просмотреть на `http://localhost`
  
  Postman:
- - [COMMERCIAL-STORE DOCS](https://www.postman.com/)
+ - [GooHope DOCS](https://www.postman.com/)
  
- Дизайн проекта: 
- - [COMMERCIAL-STORE Figma](https://www.figma.com/)
+ Дизайн проекта:
+ - [GooHope Figma](https://www.figma.com/file/YLZlFEEca9rP4ziNTJg1V5/GooHope?node-id=0%3A1)
  
  Примечание
  - Если отсутствует bash:

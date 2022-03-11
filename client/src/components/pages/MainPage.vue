@@ -62,6 +62,12 @@ export default {
 
 <style lang="sass" scoped>
 .main
-  padding-top: 290px
+  padding-top: 100px
   width: 1250px
+  & .hero
+    &_title
+      &-title
+        color: $orange
+        font-size: 18px
+        +medium
 </style>

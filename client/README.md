@@ -1,21 +1,24 @@
 # client
 
-## Build Setup
+## Project setup
+```
+npm install
+```
 
-```bash
-# install dependencies
-$ npm install
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+### Compiles and minifies for production
+```
+npm run build
+```
 
-# build for production and launch server
-$ npm run build
-$ npm run start
+### Lints and fixes files
+```
+npm run lint
+```
 
-# generate static project
-$ npm run generate
-``` 
-
-For detailed explanation on how things work, check out [Vue.js docs](https://vuejs.org).
-
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

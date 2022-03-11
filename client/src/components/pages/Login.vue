@@ -1,0 +1,16 @@
+<template>
+  <div class="login">
+    Войти
+  </div>
+</template>
+
+<script>
+export default {
+  // eslint-disable-next-line vue/multi-word-component-names
+  name: "Login"
+}
+</script>
+
+<style lang="sass" scoped>
+
+</style>

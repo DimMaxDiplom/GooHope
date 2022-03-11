@@ -1,5 +1,5 @@
 <template>
-  <div class="bg main">
+  <div class="main">
     <div class="hero">
       <div class="hero_title">
         <h2 class="hero_title-title">Новости сообщества</h2>
@@ -40,12 +40,14 @@
           </div>
         </div>
         <div class="hero_card_search">
-          <input type="search" class="hero_card_search-search">
-          <div class="hero_card_search-search">Найти людей</div>
-        </div>
-        <div class="hero_card_search">
-          <input type="search" class="hero_card_search-search">
-          <div class="hero_card_search-search">Найти продукт</div>
+          <div class="hero_card_search_block">
+            <input type="search" class="hero_card_search_block-search">
+            <div class="hero_card_search_block-search">Найти людей</div>
+          </div>
+          <div class="hero_card_search_block">
+            <input type="search" class="hero_card_search_block-search">
+            <div class="hero_card_search_block-search">Найти продукт</div>
+          </div>
         </div>
       </div>
     </div>
@@ -59,4 +61,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.main
+  padding-top: 290px
+  width: 1250px
 </style>

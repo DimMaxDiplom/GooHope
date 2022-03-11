@@ -32,7 +32,6 @@ export default {
 .header
   width: 1250px
   height: 185px
-  position: absolute
   display: flex
   &_logo
     &-logo

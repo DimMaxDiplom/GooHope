@@ -24,16 +24,12 @@ export default {
   justify-content: flex-start
   flex-direction: column
   align-items: center
+  min-height: 100vh
+  width: calc(100vw - 15px)
+  background-color: $black
 
 *
   padding: 0
   margin: 0
   box-sizing: border-box
-
-.bg
-  min-height: 100vh
-  width: calc(100vw - 15px)
-  background-color: $black
-  text-decoration: none
-  text-transform: none
 </style>

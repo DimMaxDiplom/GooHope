@@ -27,8 +27,6 @@ export default {
 .footer
   width: 1220px
   height: 185px
-  position: absolute
-  bottom: 0
   display: flex
   &_cols
     display: flex

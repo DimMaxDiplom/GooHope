@@ -10,7 +10,7 @@
       <router-link to="/" class="header_nav-elem">Поддержка</router-link>
     </nav>
     <div class="header_side">
-      <router-link to="/login" class="header_side-login">Войти</router-link>
+      <router-link to="/sign_in" class="header_side-login">Войти</router-link>
       <div class="header_side-download">Установить <span>GooHope</span></div>
     </div>
   </div>

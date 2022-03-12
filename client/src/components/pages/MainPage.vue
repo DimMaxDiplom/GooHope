@@ -53,12 +53,23 @@
         </div>
       </div>
     </div>
+    <div class="recs">
+      <h2 class="recs-title">Рекомендации</h2>
+      <div class="recs_catgs">
+        <div class="recs_catgs-catg active">Все</div>
+        <div class="recs_catgs-catg">Иллюстрации</div>
+        <div class="recs_catgs-catg">Видео</div>
+        <div class="recs_catgs-catg">Новости</div>
+        <div class="recs_catgs-catg">Обзоры</div>
+        <div class="recs_catgs-catg">Стримы</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "MainPage"
+  name: "MainPage",
 }
 </script>
 
@@ -267,5 +278,39 @@ export default {
               bottom: 28px
               &:hover
                 cursor: pointer
+  & .recs
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    justify-content: flex-start
+    &-title
+      color: $white
+      margin-top: 100px
+      padding-bottom: 25px
+      +bold
+      border-bottom: 4px solid $orange
+      width: 100%
+    &_catgs
+      display: flex
+      justify-content: flex-start
+      align-items: flex-start
+      margin-bottom: 30px
+      &-catg
+        color: $white
+        +bold
+        font-size: 24px
+        padding: 5px 35px
+        border-radius: 0 0 10px 10px
+        -webkit-transition: 0.2s
+        -moz-transition: 0.2s
+        -ms-transition: 0.2s
+        -o-transition: 0.2s
+        transition: 0.2s
+        &:hover
+          background-color: $trs_gray
+          cursor: pointer
+        &.active
+          background-color: $gray
+
 
 </style>

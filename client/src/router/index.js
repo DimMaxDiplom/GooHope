@@ -1,6 +1,6 @@
 import {createWebHistory, createRouter} from "vue-router"
 import MainPage from "@/components/pages/MainPage";
-import Login from "@/components/pages/Login";
+import SignIn from "@/components/pages/SignIn";
 
 const DEFAULT_TITLE = 'GooHope'
 
@@ -11,9 +11,9 @@ const routes = [
         component: MainPage,
     },
     {
-        path: "/login",
-        name: Login.name,
-        component: Login
+        path: "/sign_in",
+        name: SignIn.name,
+        component: SignIn
     }
 ];
 

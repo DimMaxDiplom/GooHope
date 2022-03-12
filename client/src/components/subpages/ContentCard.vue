@@ -88,10 +88,28 @@ export default {
           margin-right: 5px
           &-icon
             color: $black
+            -webkit-transition: 0.2s
+            -moz-transition: 0.2s
+            -ms-transition: 0.2s
+            -o-transition: 0.2s
+            transition: 0.2s
+            &:hover
+              color: $orange
+            &.active
+              color: $orange
         & .like
           margin-left: 5px
           &-icon
             color: $black
+            -webkit-transition: 0.2s
+            -moz-transition: 0.2s
+            -ms-transition: 0.2s
+            -o-transition: 0.2s
+            transition: 0.2s
+            &:hover
+              color: $pink
+            &.active
+              color: $pink
       &-likes
         color: $orange
         +medium

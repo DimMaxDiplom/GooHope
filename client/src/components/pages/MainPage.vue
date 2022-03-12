@@ -79,16 +79,37 @@
                        :commends="item[1].commends"/>
         </div>
       </div>
+      <div class="video">
+        <div class="video_line" v-for="item in video" :key="item.id">
+          <ContentCard :content_image_path="item[0].content_video_path"
+                       :author="item[0].author"
+                       :title="item[0].title"
+                       :game_title="item[0].game_title"
+                       :commends="item[0].commends"/>
+          <ContentCard :content_image_path="item[1].content_video_path"
+                       :author="item[1].author"
+                       :title="item[1].title"
+                       :game_title="item[1].game_title"
+                       :commends="item[1].commends"/>
+        </div>
+      </div>
+      <div class="mainNews">
+        <NewsCard v-for="item in news" :key="item.id"
+                  :content="item.content" :content_image_path="item.content_image_path"
+                  :author="item.author" :title="item.title" :commends="item.commends"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import ContentCard from "@/components/subpages/ContentCard";
+import NewsCard from "@/components/subpages/NewsCard";
 
 export default {
   name: "MainPage",
-  components: {ContentCard},
+  components: {NewsCard, ContentCard},
   data() {
     return {
       ills: [
@@ -123,6 +144,66 @@ export default {
             game_title: 'Game Title 4',
             commends: 25
           }]
+      ],
+      video: [
+        [
+          {
+            content_video_path: '',
+            author: 'ReF0iL 1',
+            title: 'ReF0iL title 1',
+            game_title: 'Game Title 1',
+            commends: 1015
+          },
+          {
+            content_video_path: '',
+            author: 'ReF0iL 2',
+            title: 'ReF0iL title 2',
+            game_title: 'Game Title 2',
+            commends: 125
+          }
+        ],
+        [
+          {
+            content_video_path: '',
+            author: 'ReF0iL 3',
+            title: 'ReF0iL title 3',
+            game_title: 'Game Title 3',
+            commends: 1
+          },
+          {
+            content_video_path: '',
+            author: 'ReF0iL 4',
+            title: 'ReF0iL title 4',
+            game_title: 'Game Title 4',
+            commends: 25
+          }]
+      ],
+      news: [
+        {
+          content_image_path: '',
+          author: 'ReF0iL 1',
+          title: 'ReF0iL title 1',
+          commends: 1015,
+          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus lacus nibh, ac lacinia diam euismod quis. Etiam ultrices ipsum ac augue condimentum, vel molestie lorem consectetur. Praesent sodales diam tellus, non tincidunt ipsum vestibulum eget. Nam ut mauris dui. Sed gravida ultrices lacus faucibus tincidunt. Quisque vel risus lorem. Ut at sodales est."
+        }, {
+          content_image_path: '',
+          author: 'ReF0iL 1',
+          title: 'ReF0iL title 1',
+          commends: 1015,
+          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus lacus nibh, ac lacinia diam euismod quis. Etiam ultrices ipsum ac augue condimentum, vel molestie lorem consectetur. Praesent sodales diam tellus, non tincidunt ipsum vestibulum eget. Nam ut mauris dui. Sed gravida ultrices lacus faucibus tincidunt. Quisque vel risus lorem. Ut at sodales est."
+        }, {
+          content_image_path: '',
+          author: 'ReF0iL 1',
+          title: 'ReF0iL title 1',
+          commends: 1015,
+          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus lacus nibh, ac lacinia diam euismod quis. Etiam ultrices ipsum ac augue condimentum, vel molestie lorem consectetur. Praesent sodales diam tellus, non tincidunt ipsum vestibulum eget. Nam ut mauris dui. Sed gravida ultrices lacus faucibus tincidunt. Quisque vel risus lorem. Ut at sodales est."
+        }, {
+          content_image_path: '',
+          author: 'ReF0iL 1',
+          title: 'ReF0iL title 1',
+          commends: 1015,
+          content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus lacus nibh, ac lacinia diam euismod quis. Etiam ultrices ipsum ac augue condimentum, vel molestie lorem consectetur. Praesent sodales diam tellus, non tincidunt ipsum vestibulum eget. Nam ut mauris dui. Sed gravida ultrices lacus faucibus tincidunt. Quisque vel risus lorem. Ut at sodales est."
+        },
       ]
     }
   }
@@ -420,6 +501,29 @@ export default {
         padding-bottom: 25px
         margin-bottom: 25px
         border-bottom: 4px solid $orange
+  & .video
+    display: flex
+    flex-direction: column
+    width: 100%
+    background-color: $gray
+    padding: 15px
+    margin-top: 50px
+    &_line
+      display: flex
+      justify-content: space-between
+      align-items: flex-start
+      width: 100%
+      &:nth-child(1)
+        padding-bottom: 25px
+        margin-bottom: 25px
+        border-bottom: 4px solid $orange
+  & .mainNews
+    display: flex
+    flex-direction: column
+    width: 100%
+    background-color: $gray
+    padding: 15px
+    margin-top: 50px
 
 
 </style>

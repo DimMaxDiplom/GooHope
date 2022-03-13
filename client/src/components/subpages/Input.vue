@@ -1,5 +1,5 @@
 <template>
-  <div class="input">
+  <div class="input" :id="field" >
     <div class="input-title">{{ label }}</div>
     <input v-model="data" :type="type" :placeholder="placeholder">
   </div>

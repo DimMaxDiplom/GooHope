@@ -4,9 +4,10 @@
       <img src="" alt="">
     </div>
     <div class="card_info">
-      <ContentLine class="card_info-content" :content="author"/>
-      <ContentLine class="card_info-content" :content="title"/>
-      <ContentLine class="card_info-content" :content="game_title"/>
+      <ContentLine v-if="author"  class="card_info-content" :content="author"/>
+      <ContentLine v-if="title"  class="card_info-content" :content="title"/>
+      <ContentLine v-if="game_title"  class="card_info-content" :content="game_title"/>
+      <ContentLine v-if="date" class="card_info-content" :content="date"/>
       <div class="card_info_comments">
         Перейти к обсуждению
         <vue-feather type="message-square" size="12" class="card_info_comments-icon"/>
@@ -41,7 +42,13 @@ export default {
     author: String,
     title: String,
     game_title: String,
-    commends: Number
+    commends: Number,
+    date: String,
+    type: String
+  },
+  mounted() {
+    const elems = [this.author, this.title, this.game_title, this.date].filter(elem => elem)
+    document.querySelectorAll(`.${this.type} .card_info_comments`).forEach(elem => elem.style.marginTop = `${280 - elems.length * 50}px`)
   }
 }
 </script>
@@ -68,7 +75,6 @@ export default {
     &-content
       margin-bottom: 20px
     &_comments
-      margin-top: 130px
       margin-bottom: 10px
       color: $white
       text-decoration: underline
@@ -95,6 +101,7 @@ export default {
             transition: 0.2s
             &:hover
               color: $orange
+              cursor: pointer
             &.active
               color: $orange
         & .like
@@ -108,6 +115,7 @@ export default {
             transition: 0.2s
             &:hover
               color: $pink
+              cursor: pointer
             &.active
               color: $pink
       &-likes

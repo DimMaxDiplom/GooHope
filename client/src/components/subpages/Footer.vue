@@ -25,12 +25,15 @@ export default {
 
 <style lang="sass" scoped>
 .footer
-  width: 1220px
+  width: 100%
   height: 185px
   display: flex
+  justify-content: center
+  border-top: 4px solid $gray
   &_cols
     display: flex
     align-items: flex-start
+    width: 1250px
     &_col
       display: flex
       justify-content: center

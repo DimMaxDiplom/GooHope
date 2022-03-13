@@ -1,29 +1,32 @@
 <template>
-  <div class="login">
-    <div class="login_left">
-      <div class="login_left-title">Авторизация</div>
-      <div class="login_left_fields">
-        <Input label="email" placeholder="Введите ваш Email адрес" type="email" @updateInput="onUpdateInput"
-               field="email"
+  <div class="sign_up">
+    <div class="sign_up_left">
+      <div class="sign_up_left-title">Регистрация</div>
+      <div class="sign_up_left_fields">
+        <Input label="Логин" placeholder="Введите ваш логин" type="text" @updateInput="onUpdateInput"
+               field="login"
         />
         <Input label="Пароль" placeholder="Введите ваш Пароль" type="password" @updateInput="onUpdateInput"
                field="password"
         />
+        <Input label="Пароль повторно" placeholder="Введите ваш Пароль повтороно" type="password" @updateInput="onUpdateInput"
+               field="repeat_password"
+        />
       </div>
-      <div class="login_left_btn">
-        Войти
-        <vue-feather type="chevrons-right" class="login_left_btn-icon" size="24"/>
+      <div class="sign_up_left_btn">
+        Перейти к шагу №{{ step + 1 }}
+        <vue-feather type="chevrons-right" class="sign_up_left_btn-icon" size="24"/>
       </div>
     </div>
-    <div class="login_right">
-      <div class="login_right-title">Ещё не создали аккаунт?</div>
-      <div class="login_right_body">
+    <div class="sign_up_right">
+      <div class="sign_up_right-title">Уже создали аккаунт?</div>
+      <div class="sign_up_right_body">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus lacus nibh, ac lacinia diam euismod
         quis. Etiam ultrices ipsum ac augue condimentum, vel molestie lorem consectetur
       </div>
-      <div class="login_right_btn" @click="$router.push('/sign_up')">
-        Создать аккаунт
-        <vue-feather type="chevrons-right" class="login_right_btn-icon" size="24"/>
+      <div class="sign_up_right_btn" @click="$router.push('/sign_in')">
+        Войти в аккаунт
+        <vue-feather type="chevrons-right" class="sign_up_right_btn-icon" size="24"/>
       </div>
     </div>
   </div>
@@ -33,14 +36,23 @@
 import Input from "@/components/subpages/Input";
 
 export default {
-  name: "SignIn",
+  name: "SignUp",
   components: {Input},
   data() {
     return {
+      step: 1,
       user: {
+        login: String,
+        password: String,
+        repeat_password: String,
+        name: String,
         email: String,
-        password: String
-      }
+        country: String,
+        code: String
+      },
+      inputs: [
+          []
+      ]
     }
   },
   methods: {
@@ -52,7 +64,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.login
+.sign_up
   display: flex
   justify-content: space-between
   align-items: flex-start
@@ -63,16 +75,18 @@ export default {
     width: 815px
     height: 615px
     padding: 55px 80px
+    display: flex
+    flex-direction: column
+    justify-content: space-between
     &-title
-      margin-bottom: 50px
+      margin-bottom: 30px
       color: $black
       text-transform: uppercase
       font-size: 24px
       +bold
     &_fields
-      margin-bottom: 92px
     &_btn
-      width: 210px
+      width: 315px
       height: 70px
       background-color: $gray
       display: flex
@@ -96,7 +110,7 @@ export default {
         -o-transform: scale(1.1)
         transform: scale(1.1)
       &-icon
-        padding-left: 55px
+        padding: 21px
         color: $orange
   &_right
     background-color: $gray

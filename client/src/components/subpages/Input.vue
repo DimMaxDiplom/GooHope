@@ -1,7 +1,7 @@
 <template>
   <div class="input">
     <div class="input-title">{{ label }}</div>
-    <input :type="type" :placeholder="placeholder">
+    <input v-model="data" :type="type" :placeholder="placeholder">
   </div>
 </template>
 
@@ -9,10 +9,21 @@
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Input",
+  data() {
+    return {
+      data: ''
+    }
+  },
   props: {
     label: String,
     placeholder: String,
-    type: String
+    type: String,
+    field: String
+  },
+  watch: {
+    data() {
+      this.$emit('updateInput', this.field, this.data)
+    }
   }
 }
 </script>
@@ -32,7 +43,7 @@ export default {
     margin-bottom: 15px
   & input
     width: 630px
-    height: 90px
+    height: 70px
     background-color: transparent
     border: 2px solid $trs_gray
     padding-left: 40px

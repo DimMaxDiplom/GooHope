@@ -21,11 +21,26 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 })
+
 router.beforeEach((to, from, next) => {
-    let text = `${DEFAULT_TITLE} - ${to.name}`
+    const names = {
+        'SignIn': 'Вход',
+    };
+
+    // Заголовки для отдельных страниц
+    let text = `${DEFAULT_TITLE} - ${names[to.name]}`;
     if (to.name === MainPage.name)
-        text = `Добро пожаловать в ${DEFAULT_TITLE}`
+        text = `Добро пожаловать в ${DEFAULT_TITLE}`;
     document.title = text;
+
+    // удаление футера на некоторых страницах
+    const non_footer_pages = [SignIn.name];
+    if (non_footer_pages.includes(to.name)) {
+        document.querySelector('.footer').style.display = 'none';
+    } else {
+        document.querySelector('.footer').style.display = 'flex';
+    }
+
     next();
 })
 

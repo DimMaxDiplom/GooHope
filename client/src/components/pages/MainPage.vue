@@ -11,7 +11,7 @@
             <div class="hero_card_invite_title-title">Войдите в свой профиль для удобства</div>
           </div>
           <div class="hero_card_invite_btns">
-            <router-link to="/login" class="hero_card_invite_btns-signin">Войти</router-link>
+            <router-link to="/sign_in" class="hero_card_invite_btns-signin">Войти</router-link>
             <router-link to="/sign_up" class="hero_card_invite_btns-signup">Зарегистрироваться</router-link>
           </div>
           <div class="hero_card_invite_adds">Хотите узнать больше? Вам

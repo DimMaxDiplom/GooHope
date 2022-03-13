@@ -19,7 +19,12 @@
 <script>
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Footer"
+  name: "Footer",
+  data() {
+    return {
+      show: true
+    }
+  },
 }
 </script>
 
@@ -30,21 +35,25 @@ export default {
   display: flex
   justify-content: center
   border-top: 4px solid $gray
+
   &_cols
     display: flex
     align-items: flex-start
     width: 1250px
+
     &_col
       display: flex
       justify-content: center
       align-items: flex-start
       flex-direction: column
+
       &-elem
         +light
         text-decoration: none
         color: $white
         font-size: 18px
         padding-top: 10px
+
       &:nth-child(1)
         margin-right: 60px
 </style>

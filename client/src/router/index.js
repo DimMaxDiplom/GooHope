@@ -1,6 +1,7 @@
 import {createWebHistory, createRouter} from "vue-router"
 import MainPage from "@/components/pages/MainPage";
 import SignIn from "@/components/pages/SignIn";
+import SignUp from "@/components/pages/SignUp";
 
 const DEFAULT_TITLE = 'GooHope'
 
@@ -14,6 +15,11 @@ const routes = [
         path: "/sign_in",
         name: SignIn.name,
         component: SignIn
+    },
+    {
+        path: "/sign_up",
+        name: SignUp.name,
+        component: SignUp
     }
 ];
 
@@ -25,6 +31,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const names = {
         'SignIn': 'Вход',
+        'SignUp': 'Регистрация'
     };
 
     // Заголовки для отдельных страниц
@@ -34,7 +41,7 @@ router.beforeEach((to, from, next) => {
     document.title = text;
 
     // удаление футера на некоторых страницах
-    const non_footer_pages = [SignIn.name];
+    const non_footer_pages = [SignIn.name, SignUp.name];
     if (non_footer_pages.includes(to.name)) {
         document.querySelector('.footer').style.display = 'none';
     } else {

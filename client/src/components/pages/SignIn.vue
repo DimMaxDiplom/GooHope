@@ -3,8 +3,12 @@
     <div class="login_left">
       <div class="login_left-title">Авторизация</div>
       <div class="login_left_fields">
-        <Input label="email" placeholder="Введите ваш Email адрес" type="email"/>
-        <Input label="Пароль" placeholder="Введите ваш Пароль" type="password"/>
+        <Input label="email" placeholder="Введите ваш Email адрес" type="email" @updateInput="onUpdateInput"
+               field="email"
+        />
+        <Input label="Пароль" placeholder="Введите ваш Пароль" type="password" @updateInput="onUpdateInput"
+               field="password"
+        />
       </div>
       <div class="login_left_btn">
         Войти
@@ -17,7 +21,7 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus lacus nibh, ac lacinia diam euismod
         quis. Etiam ultrices ipsum ac augue condimentum, vel molestie lorem consectetur
       </div>
-      <div class="login_right_btn">
+      <div class="login_right_btn" @click="$router.push('/sign_up')">
         Создать аккаунт
         <vue-feather type="chevrons-right" class="login_right_btn-icon" size="24"/>
       </div>
@@ -30,7 +34,20 @@ import Input from "@/components/subpages/Input";
 
 export default {
   name: "SignIn",
-  components: {Input}
+  components: {Input},
+  data() {
+    return {
+      user: {
+        email: String,
+        password: String
+      }
+    }
+  },
+  methods: {
+    onUpdateInput(field, data) {
+      this.user[field] = data
+    }
+  }
 }
 </script>
 

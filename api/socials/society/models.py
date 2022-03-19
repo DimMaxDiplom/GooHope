@@ -11,7 +11,7 @@ class User(models.Model):
     user_id = models.IntegerField(unique=True)
     avatar = models.ImageField(upload_to=f'user_{user_id}/', blank=True, null=True, default=None)
     status = models.BooleanField(default=True)
-    publicity = models.CharField(choices=publicity_choices)
+    publicity = models.CharField(choices=publicity_choices, max_length=50)
 
 
 class Society(models.Model):

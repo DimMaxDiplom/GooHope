@@ -2,9 +2,16 @@ from django.db import models
 
 
 class User(models.Model):
+    publicity_choices = (
+        ('ALL', 'All'),
+        ('FaF', 'Friend and friends of friends'),
+        ('JF', 'Just friends'),
+        ('OO', 'Only owner')
+    )
     user_id = models.IntegerField(unique=True)
     avatar = models.ImageField(upload_to=f'user_{user_id}/', blank=True, null=True, default=None)
     status = models.BooleanField(default=True)
+    publicity = models.CharField(choices=publicity_choices)
 
 
 class Society(models.Model):

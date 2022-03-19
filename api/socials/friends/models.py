@@ -10,5 +10,5 @@ class Friends(models.Model):
         ('BL', 'Blocked')
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    friend = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(choices=status_choices)
+    friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friend')
+    status = models.CharField(choices=status_choices, max_length=15)

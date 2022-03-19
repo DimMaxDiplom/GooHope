@@ -2,6 +2,7 @@ import {createWebHistory, createRouter} from "vue-router"
 import MainPage from "@/components/pages/MainPage";
 import SignIn from "@/components/pages/SignIn";
 import SignUp from "@/components/pages/SignUp";
+import ProfilePage from "@/components/pages/ProfilePage";
 
 const DEFAULT_TITLE = 'GooHope'
 
@@ -20,6 +21,11 @@ const routes = [
         path: "/sign_up",
         name: SignUp.name,
         component: SignUp
+    },
+    {
+        path: "/profile",
+        name: ProfilePage.name,
+        component: ProfilePage
     }
 ];
 

@@ -37,7 +37,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const names = {
         'SignIn': 'Вход',
-        'SignUp': 'Регистрация'
+        'SignUp': 'Регистрация',
+        'ProfilePage': 'Профиль'
     };
 
     // Заголовки для отдельных страниц

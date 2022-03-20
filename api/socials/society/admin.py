@@ -1,9 +1,7 @@
 from django.contrib import admin
-from .models import User
+from .models import User, Society, SocietyMembers, SocietyComments
 
-
-class UserAdmin(admin.ModelAdmin):
-    list_display = ['user_id', 'avatar', 'status', 'publicity']
-
-
-admin.site.register(User, UserAdmin)
+admin.site.register(User)
+admin.site.register(Society)
+admin.site.register(SocietyMembers)
+admin.site.register(SocietyComments)

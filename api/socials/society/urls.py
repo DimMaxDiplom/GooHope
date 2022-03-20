@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from friends.models import Friends
-from society.models import User
+from society.models import User, Society
 
 
 class UserViewSet(ModelViewSet):
@@ -47,5 +47,6 @@ class UserViewSet(ModelViewSet):
         return Response({
             'user': profile.values('avatar', 'status', 'description').first(),
             'hidden': UserViewSet.visibility_regulator(user, profile),
-            'friends': User.objects.filter(user_id__in=profile.first().friend.all().values('user_id')).values()
+            'friends': User.objects.filter(user_id__in=profile.first().friend.all().values('user_id')).values(),
+            'societies': Society.objects.filter(societymembers__user=profile.first()).values()
         }, status=status.HTTP_200_OK)

@@ -19,17 +19,23 @@ class User(models.Model):
 
 
 class Society(models.Model):
-    title = models.CharField(max_length=55)
-    image = models.ImageField()
+    title = models.CharField(max_length=55, unique=True)
+    image = models.ImageField(upload_to=f'society_{title}/', blank=True, null=True, default=None)
     creator_id = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     description = models.CharField(max_length=500, null=True, blank=True)
 
+    def __str__(self):
+        return self.title
+
 
 class SocietyMembers(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='society_members')
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.society} - {self.user}'
 
 
 class SocietyComments(models.Model):
@@ -38,3 +44,6 @@ class SocietyComments(models.Model):
     comment = models.CharField(max_length=230)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.society} - {self.user} - {self.comment}'

@@ -2,8 +2,8 @@
   <div class="bar">
     <div class="bar-image"></div>
     <div class="bar_info">
-      <div class="bar_info-title">{{ friend.title }}</div>
-      <div class="bar_info-content" :class="friend.color">{{ friend.content }}</div>
+      <div class="bar_info-title">{{ tile.title }}</div>
+      <div class="bar_info-content" :class="tile.color">{{ tile.content }}</div>
     </div>
   </div>
 </template>
@@ -12,7 +12,7 @@
 export default {
   name: "ListBar",
   props: {
-    friend: {
+    tile: {
       title: String,
       content: String,
       color: String

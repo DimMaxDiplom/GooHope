@@ -48,7 +48,7 @@ router.beforeEach((to, from, next) => {
     document.title = text;
 
     // удаление футера на некоторых страницах
-    const non_footer_pages = [SignIn.name, SignUp.name];
+    const non_footer_pages = [SignIn.name, SignUp.name, ProfilePage.name];
     if (non_footer_pages.includes(to.name)) {
         document.querySelector('.footer').style.display = 'none';
     } else {

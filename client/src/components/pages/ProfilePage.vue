@@ -46,9 +46,26 @@
             <div class="profile_main_right_friends_title-num">({{ friends_count }})</div>
           </div>
           <div class="profile_main_right_friends_list">
-            <ListBar v-for="friend in friends" :key="friend.id" :friend="friend" />
+            <ListBar v-for="friend in friends" :key="friend.id" :tile="friend" />
           </div>
         </div>
+        <div class="profile_main_right_groups">
+          <div class="profile_main_right_groups_title">
+            <div class="profile_main_right_groups_title-title">Список групп</div>
+            <div class="profile_main_right_groups_title-num">({{ groups_count }})</div>
+          </div>
+          <div class="profile_main_right_groups_list">
+            <ListBar v-for="group in groups" :key="group.id" :tile="group" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="profile_comments">
+      <div class="profile_comments_title">
+        <div class="profile_comments_title-title">Комментарии</div>
+      </div>
+      <div class="profile_comments_list">
+        <CommentBar v-for="comment in comments" :key="comment.id" :comment="comment"/>
       </div>
     </div>
   </div>
@@ -58,10 +75,11 @@
 
 import GameCard from "@/components/subpages/GameCard";
 import ListBar from "@/components/subpages/ListBar";
+import CommentBar from "@/components/subpages/CommentBar";
 
 export default {
   name: "ProfilePage",
-  components: {GameCard, ListBar},
+  components: {GameCard, ListBar, CommentBar},
   data() {
     return {
       games: [
@@ -104,6 +122,21 @@ export default {
         {title: 'ReF0iL-3', content: 'Последний раз в сети: 5ч 37мин назад', color: 'red'},
         {title: 'ReF0iL-4', content: 'Последний раз в сети: 5ч 37мин назад', color: 'red'},
         {title: 'ReF0iL-5', content: 'Последний раз в сети: 5ч 37мин назад', color: 'red'},
+      ],
+      groups_count: 19,
+      groups: [
+        {title: 'Group-1', content: 'Участников: 1261'},
+        {title: 'Group-2', content: 'Участников: 126'},
+        {title: 'Group-3', content: 'Участников: 11'},
+        {title: 'Group-4', content: 'Участников: 1'},
+        {title: 'Group-5', content: 'Участников: 21261'},
+      ],
+      comments: [
+        {sender: 'ReF0iL-1', created_date: '24.02.2022', created_time: '18:36', signature: 'С Уважением, Дмитрий', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar placerat placerat. Aliquam faucibus arcu dolor, at condimentum tortor posuere in. Curabitur tristique augue eu nisl aliquam tincidunt. Nam vehicula vulputate eleifend. Suspendisse dictum a leo a vestibulum. Suspendisse consequat purus in sapien accumsan sagittis. Sed quis est sed libero fermentum maximus. Donec sed tincidunt tellus.'},
+        {sender: 'ReF0iL-2', created_date: '25.02.2022', created_time: '18:37', signature: 'С Уважением, Дмитрий', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar placerat placerat. Aliquam faucibus arcu dolor, at condimentum tortor posuere in. Curabitur tristique augue eu nisl aliquam tincidunt. Nam vehicula vulputate eleifend. Suspendisse dictum a leo a vestibulum. Suspendisse consequat purus in sapien accumsan sagittis. Sed quis est sed libero fermentum maximus. Donec sed tincidunt tellus.'},
+        {sender: 'ReF0iL-3', created_date: '26.02.2022', created_time: '18:38', signature: 'С Уважением, Дмитрий', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar placerat placerat. Aliquam faucibus arcu dolor, at condimentum tortor posuere in. Curabitur tristique augue eu nisl aliquam tincidunt. Nam vehicula vulputate eleifend. Suspendisse dictum a leo a vestibulum. Suspendisse consequat purus in sapien accumsan sagittis. Sed quis est sed libero fermentum maximus. Donec sed tincidunt tellus.'},
+        {sender: 'ReF0iL-4', created_date: '27.02.2022', created_time: '18:39', signature: 'С Уважением, Дмитрий', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar placerat placerat. Aliquam faucibus arcu dolor, at condimentum tortor posuere in. Curabitur tristique augue eu nisl aliquam tincidunt. Nam vehicula vulputate eleifend. Suspendisse dictum a leo a vestibulum. Suspendisse consequat purus in sapien accumsan sagittis. Sed quis est sed libero fermentum maximus. Donec sed tincidunt tellus.'},
+        {sender: 'ReF0iL-5', created_date: '28.02.2022', created_time: '18:40', signature: 'С Уважением, Дмитрий', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar placerat placerat. Aliquam faucibus arcu dolor, at condimentum tortor posuere in. Curabitur tristique augue eu nisl aliquam tincidunt. Nam vehicula vulputate eleifend. Suspendisse dictum a leo a vestibulum. Suspendisse consequat purus in sapien accumsan sagittis. Sed quis est sed libero fermentum maximus. Donec sed tincidunt tellus.'},
       ]
     }
   },
@@ -373,4 +406,97 @@ export default {
           background-color: $trs_gray
           border-radius: 10px
           padding: 15px 0 5px 20px
+      &_groups
+        display: flex
+        flex-direction: column
+        justify-content: flex-end
+        align-items: center
+        margin-top: 100px
+        &_title
+          display: flex
+          color: $white
+          font-size: 18px
+          width: 280px
+          +medium
+          position: relative
+          padding-bottom: 10px
+          border-bottom: 3px solid $orange
+          margin: 0 15px 15px
+          &::after, &::before
+            content: ''
+            display: block
+            position: absolute
+            right: -19px
+            bottom: -10px
+            width: 12px
+            height: 12px
+            background-color: $orange
+            -webkit-transform: rotate(-45deg)
+            -moz-transform: rotate(-45deg)
+            -ms-transform: rotate(-45deg)
+            -o-transform: rotate(-45deg)
+            transform: rotate(-45deg)
+            -webkit-transform-origin: 0 100%
+            -moz-transform-origin: 0 100%
+            -ms-transform-origin: 0 100%
+            -o-transform-origin: 0 100%
+            transform-origin: 0 100%
+          &::before
+            left: -6px
+          &-title
+            margin-left: 70px
+            margin-right: 25px
+          &-num
+        &_list
+          display: flex
+          flex-direction: column
+          justify-content: flex-start
+          align-items: flex-start
+          width: 330px
+          background-color: $trs_gray
+          border-radius: 10px
+          padding: 15px 0 5px 20px
+.profile
+  &_comments
+    width: 1250px
+    &_title
+      width: 225px
+      height: 55px
+      position: relative
+      &-title
+        color: $orange
+        font-size: 18px
+        +semi-bold
+        width: 224px
+        padding: 22px 0
+        border-bottom: 4px solid $orange
+        &::after
+          content: ''
+          display: block
+          position: absolute
+          right: -19px
+          bottom: -27px
+          width: 20px
+          height: 20px
+          background-color: $orange
+          -webkit-transform: rotate(-45deg)
+          -moz-transform: rotate(-45deg)
+          -ms-transform: rotate(-45deg)
+          -o-transform: rotate(-45deg)
+          transform: rotate(-45deg)
+          -webkit-transform-origin: 0 100%
+          -moz-transform-origin: 0 100%
+          -ms-transform-origin: 0 100%
+          -o-transform-origin: 0 100%
+          transform-origin: 0 100%
+    &_list
+      background-color: $trs_gray
+      margin-top: 70px
+      display: flex
+      flex-direction: column
+      justify-content: flex-start
+      align-items: flex-start
+      border-radius: 10px
+      padding: 15px 15px 0
+      margin-bottom: 15px
 </style>

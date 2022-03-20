@@ -21,8 +21,8 @@ from rest_framework import routers
 
 from society.urls import UserViewSet
 
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet, basename='user')
+router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'user', UserViewSet, basename='user')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

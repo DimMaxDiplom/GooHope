@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import User
+from .models import Friends
 
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ['user_id', 'avatar', 'status', 'publicity']
+class FriendsAdmin(admin.ModelAdmin):
+    list_display = ['user', 'friend', 'status']
 
 
-admin.site.register(User, UserAdmin)
+admin.site.register(Friends, FriendsAdmin)

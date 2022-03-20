@@ -13,6 +13,9 @@ class User(models.Model):
     status = models.BooleanField(default=True)
     publicity = models.CharField(choices=publicity_choices, max_length=50)
 
+    def __str__(self):
+        return f'User: {self.user_id} - {self.publicity}'
+
 
 class Society(models.Model):
     title = models.CharField(max_length=55)

@@ -72,6 +72,7 @@ export default {
       color: $green
       +light
       font-size: 14px
+      margin-top: 35px
   &_content
     justify-self: flex-end
     border-radius: 15px

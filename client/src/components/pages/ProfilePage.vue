@@ -491,7 +491,7 @@ export default {
           transform-origin: 0 100%
     &_list
       background-color: $trs_gray
-      margin-top: 70px
+      margin-top: 50px
       display: flex
       flex-direction: column
       justify-content: flex-start

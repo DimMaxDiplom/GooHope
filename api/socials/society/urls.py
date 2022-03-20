@@ -11,13 +11,14 @@ class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     http_method_names = ['get']
 
-    def list(self, request, *args, **kwargs):
-        # TODO: доставать id из токена (он будет получен после авторизации)
-        TEST_ID = 3
+    @staticmethod
+    def visibility_regulator(user: User.objects, profile: User.objects) -> bool:
+        """
+        :param user: Current user
+        :param profile: Opened profile
+        :return: Profile status (hidden or visible)
+        """
         hidden = False
-        _id = request.GET.get('id')
-        user = self.queryset.filter(id=_id)
-        profile = User.objects.get(id=TEST_ID)
         if not user.first().publicity == User.publicity_choices[0][0]:
             profile_friends = user.first().friend.all()
             hidden = True
@@ -27,10 +28,22 @@ class UserViewSet(ModelViewSet):
                     if not Friends.contains_friend(user.first(), profile):
                         if [x for x in [Friends.contains_friend(profile, x.user) for x in profile_friends if x] if x]:
                             hidden = False
+                    else:
+                        hidden = False
 
                 # Just friends
                 elif user.first().publicity == User.publicity_choices[2][0]:
                     if Friends.contains_friend(user.first(), profile):
                         hidden = False
+        return hidden
 
-        return Response({'user': user.values('avatar', 'status', 'publicity').first(), 'hidden': hidden}, status=status.HTTP_200_OK)
+    def list(self, request, *args, **kwargs):
+        # TODO: доставать id из токена (он будет получен после авторизации)
+        TEST_ID = 1
+        _id = request.GET.get('id')
+        user = self.queryset.filter(id=_id)
+
+        return Response({
+            'user': user.values('avatar', 'status', 'description').first(),
+            'hidden': UserViewSet.visibility_regulator(user, User.objects.get(id=TEST_ID))
+        }, status=status.HTTP_200_OK)

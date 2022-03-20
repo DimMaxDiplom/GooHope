@@ -12,6 +12,7 @@ class User(models.Model):
     avatar = models.ImageField(upload_to=f'user_{user_id}/', blank=True, null=True, default=None)
     status = models.BooleanField(default=True)
     publicity = models.CharField(choices=publicity_choices, max_length=50)
+    description = models.CharField(max_length=220, null=True, blank=True)
 
     def __str__(self):
         return f'User: {self.user_id} - {self.publicity}'

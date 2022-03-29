@@ -31,8 +31,14 @@ SECRET_KEY = "django-insecure-wq_8p-djj=%2)g8j@v3ckxy-9c)6825n4a@aw0=5in*ljws%41
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_HEADERS = "*"
 
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:8080',
+]
+
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -44,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'dialogs',
     'friends',
     'society'
@@ -63,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'socials.urls'

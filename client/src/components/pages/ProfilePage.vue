@@ -8,11 +8,11 @@
           </div>
           <div class="profile_main_left_profile_info">
             <div class="profile_main_left_profile_info_header">
-              <div class="profile_main_left_profile_info_header-title">ReF0iL</div>
-              <div class="profile_main_left_profile_info_header-status">Online</div>
+              <div class="profile_main_left_profile_info_header-title">{{ user.title }}</div>
+              <div class="profile_main_left_profile_info_header-status">{{ user.status }}</div>
             </div>
             <div class="profile_main_left_profile_info_desc">
-              <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam placerat ornare nulla quis venenatis. Pellentesque habitant morbi tristique senectus et netus et ma... </span>
+              <span>{{ user.description }}</span>
               <div class="profile_main_left_profile_info_desc-btn">Развернуть</div>
             </div>
             <div class="profile_main_left_profile_info_game">
@@ -43,19 +43,19 @@
         <div class="profile_main_right_friends">
           <div class="profile_main_right_friends_title">
             <div class="profile_main_right_friends_title-title">Список друзей</div>
-            <div class="profile_main_right_friends_title-num">({{ friends_count }})</div>
+            <div class="profile_main_right_friends_title-num">({{ friends.friends_count }})</div>
           </div>
           <div class="profile_main_right_friends_list">
-            <ListBar v-for="friend in friends" :key="friend.id" :tile="friend" />
+            <ListBar v-for="friend in friends.friends" :key="friend.id" :tile="friend" />
           </div>
         </div>
         <div class="profile_main_right_groups">
           <div class="profile_main_right_groups_title">
             <div class="profile_main_right_groups_title-title">Список групп</div>
-            <div class="profile_main_right_groups_title-num">({{ groups_count }})</div>
+            <div class="profile_main_right_groups_title-num">({{ groups.groups_count }})</div>
           </div>
           <div class="profile_main_right_groups_list">
-            <ListBar v-for="group in groups" :key="group.id" :tile="group" />
+            <ListBar v-for="group in groups.groups" :key="group.id" :tile="group" />
           </div>
         </div>
       </div>
@@ -76,6 +76,7 @@
 import GameCard from "@/components/subpages/GameCard";
 import ListBar from "@/components/subpages/ListBar";
 import CommentBar from "@/components/subpages/CommentBar";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "ProfilePage",
@@ -115,31 +116,36 @@ export default {
         },
       ],
       achs: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      friends_count: 69,
-      friends: [
-        {title: 'ReF0iL-1', content: 'Последний раз в сети: 5ч 37мин назад', color: 'red'},
-        {title: 'ReF0iL-2', content: 'Online', color: 'green'},
-        {title: 'ReF0iL-3', content: 'Последний раз в сети: 5ч 37мин назад', color: 'red'},
-        {title: 'ReF0iL-4', content: 'Последний раз в сети: 5ч 37мин назад', color: 'red'},
-        {title: 'ReF0iL-5', content: 'Последний раз в сети: 5ч 37мин назад', color: 'red'},
-      ],
-      groups_count: 19,
-      groups: [
-        {title: 'Group-1', content: 'Участников: 1261'},
-        {title: 'Group-2', content: 'Участников: 126'},
-        {title: 'Group-3', content: 'Участников: 11'},
-        {title: 'Group-4', content: 'Участников: 1'},
-        {title: 'Group-5', content: 'Участников: 21261'},
-      ],
+      // groups: [
+      //   {title: 'Group-1', content: 'Участников: 1261'},
+      //   {title: 'Group-2', content: 'Участников: 126'},
+      //   {title: 'Group-3', content: 'Участников: 11'},
+      //   {title: 'Group-4', content: 'Участников: 1'},
+      //   {title: 'Group-5', content: 'Участников: 21261'},
+      // ],
       comments: [
         {sender: 'ReF0iL-1', created_date: '24.02.2022', created_time: '18:36', signature: 'С Уважением, Дмитрий', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar placerat placerat. Aliquam faucibus arcu dolor, at condimentum tortor posuere in. Curabitur tristique augue eu nisl aliquam tincidunt. Nam vehicula vulputate eleifend. Suspendisse dictum a leo a vestibulum. Suspendisse consequat purus in sapien accumsan sagittis. Sed quis est sed libero fermentum maximus. Donec sed tincidunt tellus.'},
         {sender: 'ReF0iL-2', created_date: '25.02.2022', created_time: '18:37', signature: 'С Уважением, Дмитрий', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar placerat placerat. Aliquam faucibus arcu dolor, at condimentum tortor posuere in. Curabitur tristique augue eu nisl aliquam tincidunt. Nam vehicula vulputate eleifend. Suspendisse dictum a leo a vestibulum. Suspendisse consequat purus in sapien accumsan sagittis. Sed quis est sed libero fermentum maximus. Donec sed tincidunt tellus.'},
         {sender: 'ReF0iL-3', created_date: '26.02.2022', created_time: '18:38', signature: 'С Уважением, Дмитрий', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar placerat placerat. Aliquam faucibus arcu dolor, at condimentum tortor posuere in. Curabitur tristique augue eu nisl aliquam tincidunt. Nam vehicula vulputate eleifend. Suspendisse dictum a leo a vestibulum. Suspendisse consequat purus in sapien accumsan sagittis. Sed quis est sed libero fermentum maximus. Donec sed tincidunt tellus.'},
         {sender: 'ReF0iL-4', created_date: '27.02.2022', created_time: '18:39', signature: 'С Уважением, Дмитрий', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar placerat placerat. Aliquam faucibus arcu dolor, at condimentum tortor posuere in. Curabitur tristique augue eu nisl aliquam tincidunt. Nam vehicula vulputate eleifend. Suspendisse dictum a leo a vestibulum. Suspendisse consequat purus in sapien accumsan sagittis. Sed quis est sed libero fermentum maximus. Donec sed tincidunt tellus.'},
         {sender: 'ReF0iL-5', created_date: '28.02.2022', created_time: '18:40', signature: 'С Уважением, Дмитрий', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar placerat placerat. Aliquam faucibus arcu dolor, at condimentum tortor posuere in. Curabitur tristique augue eu nisl aliquam tincidunt. Nam vehicula vulputate eleifend. Suspendisse dictum a leo a vestibulum. Suspendisse consequat purus in sapien accumsan sagittis. Sed quis est sed libero fermentum maximus. Donec sed tincidunt tellus.'},
-      ]
+      ],
+      // user: {
+      //   title: 'ReF0iL',
+      //   status: 'Online',
+      //   description: ''
+      // }
     }
   },
+  computed: {
+    ...mapGetters({friends: 'FRIENDS_LIST', groups: 'SOCIETIES_LIST', user: 'USER'})
+  },
+  methods: {
+    ...mapActions(['UPDATE_PROFILE']),
+  },
+  mounted() {
+    this.UPDATE_PROFILE(this.$route.params.profile_id)
+  }
 
 }
 </script>
@@ -226,6 +232,8 @@ export default {
             & span
               color: $white
               font-size: 14px
+              height: 50px
+              display: block
               +medium
 
             &-btn
@@ -403,6 +411,7 @@ export default {
           justify-content: flex-start
           align-items: flex-start
           width: 330px
+          height: 380px
           background-color: $trs_gray
           border-radius: 10px
           padding: 15px 0 5px 20px

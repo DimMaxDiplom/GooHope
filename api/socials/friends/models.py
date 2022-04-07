@@ -1,6 +1,6 @@
 from django.db import models
 
-from society.models import User
+from society.models import Profile
 
 
 class Friends(models.Model):
@@ -9,8 +9,8 @@ class Friends(models.Model):
         ('NEU', 'Neutral'),
         ('BL', 'Blocked')
     )
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friend')
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    friend = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='friend')
     status = models.CharField(choices=status_choices, max_length=15)
 
     def __str__(self):

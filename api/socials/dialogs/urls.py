@@ -3,11 +3,11 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from society.models import User
+from society.models import Profile
 
 
 class DialogsViewSet(ModelViewSet):
-    queryset = User.objects.all()
+    queryset = Profile.objects.all()
     http_method_names = ['get']
 
     def list(self, request, *args, **kwargs):

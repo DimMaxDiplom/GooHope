@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class User(models.Model):
+class Profile(models.Model):
     publicity_choices = (
         ('ALL', 'All'),
         ('FaF', 'Friend and friends of friends'),
@@ -22,7 +22,7 @@ class User(models.Model):
 class Society(models.Model):
     title = models.CharField(max_length=55, unique=True)
     image = models.ImageField(upload_to=f'society_{title}/', blank=True, null=True, default=None)
-    creator_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    creator_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     description = models.CharField(max_length=500, null=True, blank=True)
@@ -32,7 +32,7 @@ class Society(models.Model):
 
 
 class SocietyMembers(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='society_members')
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='society_members')
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -40,7 +40,7 @@ class SocietyMembers(models.Model):
 
 
 class SocietyComments(models.Model):
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user = models.ForeignKey(Profile, on_delete=models.PROTECT)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
     comment = models.CharField(max_length=230)
     created = models.DateTimeField(auto_now_add=True)

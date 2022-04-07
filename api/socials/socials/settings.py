@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'dialogs',
     'friends',
-    'society'
+    'society',
+    'content'
 ]
 
 REST_FRAMEWORK = {

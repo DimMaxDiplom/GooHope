@@ -1,5 +1,7 @@
 from django.conf import settings
+from django.forms import model_to_dict
 from rest_framework import status
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.viewsets import mixins, GenericViewSet
 
@@ -12,28 +14,28 @@ class UserViewSet(mixins.RetrieveModelMixin,
     queryset = Profile.objects.all()
 
     @staticmethod
-    def visibility_regulator(user: Profile.objects, profile: Profile.objects) -> bool:
+    def visibility_regulator(user: Profile.objects, profile: Profile) -> bool:
         """
         :param user: Current user
         :param profile: Opened profile
         :return: Profile status (hidden or visible)
         """
         hidden = False
-        if not profile.first().publicity == Profile.publicity_choices[0][0]:
-            profile_friends = profile.first().friend.all()
+        if not profile.publicity == Profile.publicity_choices[0][0]:
+            profile_friends = profile.friend.all()
             hidden = True
             if profile_friends:
                 # Friend and friends of friends
-                if profile.first().publicity == Profile.publicity_choices[1][0]:
-                    if not Friends.contains_friend(profile.first(), user):
+                if profile.publicity == Profile.publicity_choices[1][0]:
+                    if not Friends.contains_friend(profile, user):
                         if [x for x in [Friends.contains_friend(user, x.user) for x in profile_friends if x] if x]:
                             hidden = False
                     else:
                         hidden = False
 
                 # Just friends
-                elif profile.first().publicity == Profile.publicity_choices[2][0]:
-                    if Friends.contains_friend(profile.first(), user):
+                elif profile.publicity == Profile.publicity_choices[2][0]:
+                    if Friends.contains_friend(profile, user):
                         hidden = False
         return hidden
 
@@ -41,11 +43,13 @@ class UserViewSet(mixins.RetrieveModelMixin,
         _id = kwargs.get('pk')
 
         user = Profile.objects.get(id=settings.USER_ID)
-        profile = self.queryset.filter(id=_id)
+        profile = get_object_or_404(self.queryset, id=_id)
+        _profile = model_to_dict(profile, ('avatar', 'login', 'status', 'description'))
+        _profile['avatar'] = profile.avatar.name
 
         return Response({
-            'user': profile.values('avatar', 'login', 'status', 'description').first(),
+            'user': _profile,
             'hidden': UserViewSet.visibility_regulator(user, profile),
-            'friends': Profile.objects.filter(user_id__in=profile.first().friend.all().values('user_id')).values(),
-            'societies': Society.objects.filter(societymembers__user=profile.first()).values()
+            'friends': Profile.objects.filter(user_id__in=profile.friend.all().values('user_id')).values(),
+            'societies': Society.objects.filter(societymembers__user=profile).values()
         }, status=status.HTTP_200_OK)

@@ -8,9 +8,13 @@ class Profile(models.Model):
         ('JF', 'Just friends'),
         ('OO', 'Only owner')
     )
+
+    def upload_path(self, *args):
+        return f'user_{self.user_id}/{args[0]}'
+
     user_id = models.IntegerField(unique=True)
     login = models.CharField(null=True, blank=True, max_length=30)
-    avatar = models.ImageField(upload_to=f'user_{user_id}/', blank=True, null=True, default=None)
+    avatar = models.ImageField(upload_to=upload_path, blank=True, null=True, default=None)
     status = models.BooleanField(default=True)
     publicity = models.CharField(choices=publicity_choices, max_length=50)
     description = models.CharField(max_length=220, null=True, blank=True)

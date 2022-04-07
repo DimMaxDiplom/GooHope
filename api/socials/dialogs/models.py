@@ -4,9 +4,13 @@ from society.models import User
 
 
 class Dialog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User')
+    friend = models.ForeignKey(User, on_delete=models.PROTECT, related_name='Friend')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    friend = models.ForeignKey(User, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f'{self.user.login} - {self.friend.login}'
 
 
 class Messages(models.Model):
@@ -14,7 +18,6 @@ class Messages(models.Model):
     message = models.CharField(max_length=800)
     sender = models.ForeignKey(User, on_delete=models.PROTECT)
 
+    def __str__(self):
+        return f'{self.sender} - {self.message[:15]}'
 
-class Dialogs(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    dialog = models.ForeignKey(Dialog, on_delete=models.CASCADE)

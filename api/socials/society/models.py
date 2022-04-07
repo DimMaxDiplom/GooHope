@@ -16,7 +16,7 @@ class User(models.Model):
     description = models.CharField(max_length=220, null=True, blank=True)
 
     def __str__(self):
-        return f'User: {self.user_id} - {self.publicity}'
+        return f'User: {self.user_id} {self.login} - {self.publicity}'
 
 
 class Society(models.Model):

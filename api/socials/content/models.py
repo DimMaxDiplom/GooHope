@@ -9,12 +9,17 @@ LIKE_STATUS = (
 )
 
 
+def upload_path(instance, name):
+    return f'user_{instance.author.login}/{name}'
+
+
 class Illustrations(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField(max_length=64)
     game_title = models.CharField(max_length=64)
     likes = models.PositiveIntegerField(blank=True, default=0)
     liked = models.CharField(max_length=8, choices=LIKE_STATUS)
+    image = models.ImageField(upload_to=upload_path)
 
 
 class Videos(models.Model):
@@ -23,9 +28,7 @@ class Videos(models.Model):
     game_title = models.CharField(max_length=64)
     likes = models.PositiveIntegerField(blank=True, default=0)
     liked = models.CharField(max_length=8, choices=LIKE_STATUS)
-
-    def __str__(self):
-        return super(Videos, self).__str__()
+    video = models.FileField(upload_to=upload_path)
 
 
 class News(models.Model):
@@ -35,6 +38,7 @@ class News(models.Model):
     content = models.TextField()
     likes = models.PositiveIntegerField(blank=True, default=0)
     liked = models.CharField(max_length=8, choices=LIKE_STATUS)
+    image = models.ImageField(upload_to=upload_path, blank=True, null=True, default=None)
 
 
 class Reviews(models.Model):
@@ -44,3 +48,4 @@ class Reviews(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     likes = models.PositiveIntegerField(blank=True, default=0)
     liked = models.CharField(max_length=8, choices=LIKE_STATUS)
+    image = models.ImageField(upload_to=upload_path, blank=True, null=True, default=None)

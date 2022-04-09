@@ -1,26 +1,24 @@
-# GooHope
+# client
 
-Инструкция по запуску проекта:
+## Project setup
+```
+npm install
+```
 
- - `bash setup.sh`
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-Необходимые инструменты для запуска проекта:
+### Compiles and minifies for production
+```
+npm run build
+```
 
- - `docker`
- - `docker-compose`
- 
- Развёрнутый проект можно просмотреть на `http://localhost`
- 
- Postman:
- - [GooHope DOCS](https://www.postman.com/)
- 
- Дизайн проекта:
- - [GooHope Figma](https://www.figma.com/file/YLZlFEEca9rP4ziNTJg1V5/GooHope?node-id=0%3A1)
- 
- Примечание
- - Если отсутствует bash:
- ````
-    docker-compose up -d --build
-    cp api/.env.dev api/.env
-    ДОПОЛНИТЬ
- ````
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

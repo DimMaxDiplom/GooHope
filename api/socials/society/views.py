@@ -10,8 +10,9 @@ from .models import Profile, Society
 from .serializers import UserSerializer
 
 
-class UserViewSet(mixins.RetrieveModelMixin,
-                  GenericViewSet):
+class ProfileViewSet(mixins.RetrieveModelMixin,
+                     mixins.ListModelMixin,
+                     GenericViewSet):
     queryset = Profile.objects.all()
     serializer_class = UserSerializer
 
@@ -51,7 +52,7 @@ class UserViewSet(mixins.RetrieveModelMixin,
 
         return Response({
             'user': _profile,
-            'hidden': UserViewSet.visibility_regulator(user, profile),
+            'hidden': ProfileViewSet.visibility_regulator(user, profile),
             'friends': Profile.objects.filter(user_id__in=profile.friend.all().values('user_id')).values(),
             'societies': Society.objects.filter(societymembers__user=profile).values()
         }, status=status.HTTP_200_OK)

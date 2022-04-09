@@ -10,7 +10,7 @@ class Profile(models.Model):
     )
 
     def upload_path(self, *args):
-        return f'user_{self.user_id}/{args[0]}'
+        return f'user_{self.login}/{args[0]}'
 
     user_id = models.IntegerField(unique=True)
     login = models.CharField(null=True, blank=True, max_length=30)

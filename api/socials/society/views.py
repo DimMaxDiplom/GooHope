@@ -7,11 +7,13 @@ from rest_framework.viewsets import mixins, GenericViewSet
 
 from friends.models import Friends
 from .models import Profile, Society
+from .serializers import UserSerializer
 
 
 class UserViewSet(mixins.RetrieveModelMixin,
                   GenericViewSet):
     queryset = Profile.objects.all()
+    serializer_class = UserSerializer
 
     @staticmethod
     def visibility_regulator(user: Profile.objects, profile: Profile) -> bool:

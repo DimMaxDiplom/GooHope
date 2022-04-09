@@ -19,12 +19,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework import routers
 
-from dialogs.urls import DialogsViewSet
+from dialogs.views import DialogsViewSet
+from content.views import IllustrationViewSet
 from society.views import UserViewSet
 
 router = routers.DefaultRouter(trailing_slash=False)
-router.register(r'user', UserViewSet, basename='user')
+
+router.register(r'profile', UserViewSet, basename='profile')
 router.register(r'dialogs', DialogsViewSet, basename='dialogs')
+router.register(r'illustrations', IllustrationViewSet, basename='illustrations')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

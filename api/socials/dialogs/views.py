@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework.viewsets import GenericViewSet, mixins
 
-# Create your views here.
+from .models import Dialog
+from .serializers import DialogSerializer
+
+
+class DialogsViewSet(mixins.RetrieveModelMixin,
+                     mixins.ListModelMixin,
+                     GenericViewSet):
+    queryset = Dialog.objects.all()
+    serializer_class = DialogSerializer

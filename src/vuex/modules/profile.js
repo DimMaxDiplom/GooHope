@@ -1,7 +1,8 @@
 import axios from "axios";
 
+const host = 'http://127.0.0.1:8000/user'
+
 const state = {
-    host: 'http://127.0.0.1:8000',
     profile_friends: [],
     profile_societies: [],
     user: {},
@@ -46,7 +47,7 @@ const mutations = {
 }
 const actions = {
     UPDATE_PROFILE: async (context, profile_id) => {
-        axios.get(`${context.state.host}/user`, {
+        axios.get(`${host}`, {
             params: {
                 id: profile_id
             }

@@ -1,5 +1,6 @@
 import {createStore} from "vuex";
 import profile from "@/vuex/modules/profile";
+import dialogs from "@/vuex/modules/dialogs";
 
 const store = createStore({
     state: {},
@@ -7,7 +8,8 @@ const store = createStore({
     mutations: {},
     actions: {},
     modules: {
-        profile
+        profile,
+        dialogs
     },
 })
 

@@ -1,6 +1,7 @@
 import {createStore} from "vuex";
 import profile from "@/vuex/modules/profile";
 import dialogs from "@/vuex/modules/dialogs";
+import content from "@/vuex/modules/content";
 
 const store = createStore({
     state: {},
@@ -9,7 +10,8 @@ const store = createStore({
     actions: {},
     modules: {
         profile,
-        dialogs
+        dialogs,
+        content
     },
 })
 

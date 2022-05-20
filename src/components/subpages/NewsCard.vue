@@ -10,7 +10,7 @@
           <div class="news_content_main_header-title">{{ title }}</div>
         </div>
         <div class="news_content_main_body">
-          {{ content }}
+          {{ content.substring(0, 500) }}
         </div>
       </div>
       <div class="news_content_info">
@@ -47,7 +47,6 @@ export default {
     commends: Number,
     content: String
   }
-
 }
 </script>
 

@@ -25,7 +25,6 @@ export default {
   flex-direction: column
   align-items: center
   min-height: 100vh
-  width: calc(100vw - 15px)
   background-color: $black
 
 *

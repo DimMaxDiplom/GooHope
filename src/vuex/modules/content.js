@@ -2,21 +2,6 @@ import axios from "axios";
 
 const host = 'http://127.0.0.1:8000/api/content'
 
-function to_pairs(arr) {
-    let res = []
-    let size = 2
-
-    for (let i = 0; i < Math.ceil(arr.length / size); i++) {
-        res[i] = arr.slice((i * size), (i * size) + size);
-    }
-
-    if (res.length < arr.length) {
-        res[res.length - 1].push(arr.lastItem)
-    }
-
-    console.log(res)
-    return res
-}
 
 const state = {
     illustrations: [],
@@ -26,29 +11,17 @@ const state = {
 }
 const getters = {
     ILLUSTRATIONS: state => {
-        return to_pairs(state.illustrations)
-    },
-    PAIRS_ILLS: state => {
-        return [state.illustrations.slice(0, 2), state.illustrations.slice(2, 4)]
+        return state.illustrations
     },
     VIDEOS: state => {
         return state.videos
     },
-    PAIRS_VIDEOS: state => {
-        return [state.videos.slice(0, 2), state.videos.slice(2, 4)]
-    },
     REVIEWS: state => {
         return state.reviews
     },
-    PAIRS_REVIEWS: state => {
-        return [state.reviews.slice(0, 2), state.reviews.slice(2, 4)]
-    },
     NEWS: state => {
         return state.news
-    },
-    PAIRS_NEWS: state => {
-        return state.news.slice(0, 4)
-    },
+    }
 }
 const mutations = {
     UPDATE_ILLUSTRATIONS: (state, illustrations) => {

@@ -58,45 +58,45 @@
         <div class="recs">
             <h2 class="recs-title">Рекомендации</h2>
             <div class="recs_catgs">
-                <div class="recs_catgs-catg active" @click="this.status = 'all'" id="all">Все</div>
-                <div class="recs_catgs-catg" @click="this.status = 'all'" :id="ills_id">Иллюстрации</div>
-                <div class="recs_catgs-catg" @click="this.status = 'all'" :id="videos_id">Видео</div>
-                <div class="recs_catgs-catg" @click="this.status = 'all'" :id="news_id">Новости</div>
-                <div class="recs_catgs-catg" @click="this.status = 'all'" :id="reviews_id">Обзоры</div>
+                <div class="recs_catgs-catg active" @click="status = 'all'" id="all">Все</div>
+                <div class="recs_catgs-catg" @click="status = ills_id" :id="ills_id">Иллюстрации</div>
+                <div class="recs_catgs-catg" @click="status = videos_id" :id="videos_id">Видео</div>
+                <div class="recs_catgs-catg" @click="status = news_id" :id="news_id">Новости</div>
+                <div class="recs_catgs-catg" @click="status = reviews_id" :id="reviews_id">Обзоры</div>
             </div>
+            <span>{{ status }}</span>
             <div v-if="status === 'all' || status === ills_id" class="ills">
-                <span>clicked</span>
-                <div class="ills_line" v-for="item in (status === ills_id ? all_ills : status === 'all' ? ills : null)" :key="item.id">
-                    <ContentCard :content_image_path="item[0].file"
-                                 :author="item[0].author"
-                                 :title="item[0].title"
-                                 :game_title="item[0].game_title"
-                                 :commends="item[0].likes"
+                <div class="ills_line" v-for="item in ills" :key="item.id">
+                    <ContentCard :content_image_path="item[0]['file']"
+                                 :author="item[0]['author']"
+                                 :title="item[0]['title']"
+                                 :game_title="item[0]['game_title']"
+                                 :commends="item[0]['likes']"
                                  type="ills"
                     />
-                    <ContentCard :content_image_path="item[1].file"
-                                 :author="item[1].author"
-                                 :title="item[1].title"
-                                 :game_title="item[1].game_title"
-                                 :commends="item[1].likes"
+                    <ContentCard v-if="item[1]" :content_image_path="item[1]['file']"
+                                 :author="item[1]['author']"
+                                 :title="item[1]['title']"
+                                 :game_title="item[1]['game_title']"
+                                 :commends="item[1]['likes']"
                                  type="ills"
                     />
                 </div>
             </div>
             <div v-if="status === 'all' || status === videos_id" class="video">
                 <div class="video_line" v-for="item in videos" :key="item.id">
-                    <ContentCard :content_image_path="item[0].file"
-                                 :author="item[0].author"
-                                 :title="item[0].title"
-                                 :game_title="item[0].game_title"
-                                 :commends="item[0].likes"
+                    <ContentCard :content_image_path="item[0]['file']"
+                                 :author="item[0]['author']"
+                                 :title="item[0]['title']"
+                                 :game_title="item[0]['game_title']"
+                                 :commends="item[0]['likes']"
                                  type="video"
                     />
-                    <ContentCard :content_image_path="item[1].file"
-                                 :author="item[1].author"
-                                 :title="item[1].title"
-                                 :game_title="item[1].game_title"
-                                 :commends="item[1].likes"
+                    <ContentCard v-if="item[1]" :content_image_path="item[1]['file']"
+                                 :author="item[1]['author']"
+                                 :title="item[1]['title']"
+                                 :game_title="item[1]['game_title']"
+                                 :commends="item[1]['likes']"
                                  type="video"
                     />
                 </div>
@@ -109,20 +109,20 @@
             </div>
             <div v-if="status === 'all' || status === reviews_id" class="reviews">
                 <div class="reviews_line" v-for="item in reviews" :key="item.id">
-                    <ContentCard :content_image_path="item[0].file"
-                                 :author="item[0].author"
-                                 :title="item[0].title"
-                                 :game_title="item[0].game_title"
-                                 :date="item[0].date"
-                                 :commends="item[0].likes"
+                    <ContentCard :content_image_path="item[0]['file']"
+                                 :author="item[0]['author']"
+                                 :title="item[0]['title']"
+                                 :game_title="item[0]['game_title']"
+                                 :date="item[0]['date']"
+                                 :commends="item[0]['likes']"
                                  type="reviews"
                     />
-                    <ContentCard :content_image_path="item[1].file"
-                                 :author="item[1].author"
-                                 :title="item[1].title"
-                                 :game_title="item[1].game_title"
-                                 :date="item[1].date"
-                                 :commends="item[1].likes"
+                    <ContentCard v-if="item[1]" :content_image_path="item[1]['file']"
+                                 :author="item[1]['author']"
+                                 :title="item[1]['title']"
+                                 :game_title="item[1]['game_title']"
+                                 :date="item[1]['date']"
+                                 :commends="item[1]['likes']"
                                  type="reviews"
                     />
                 </div>
@@ -150,19 +150,58 @@ export default {
     },
     computed: {
         ...mapGetters({
-            ills: 'PAIRS_ILLS', videos: 'PAIRS_VIDEOS', reviews: 'PAIRS_REVIEWS', news: 'PAIRS_NEWS',
             all_ills: 'ILLUSTRATIONS', all_videos: 'VIDEOS', all_reviews: 'REVIEWS', all_news: 'NEWS'
-        })
+        }),
+        ills() {
+            if (this.status === this.ills_id) {
+                return this.to_pairs(this.all_ills)
+            }
+            return [this.all_ills.slice(0, 2), this.all_ills.slice(2, 4)]
+        },
+        videos() {
+            if (this.status === this.videos_id) {
+                return this.to_pairs(this.all_videos)
+            }
+            return [this.all_videos.slice(0, 2), this.all_videos.slice(2, 4)]
+        },
+        reviews() {
+            if (this.status === this.reviews_id) {
+                return this.to_pairs(this.all_reviews)
+            }
+            return [this.all_reviews.slice(0, 2), this.all_reviews.slice(2, 4)]
+        },
+        news() {
+            if (this.status === this.news_id) {
+                return this.all_news
+            }
+            return this.all_news.slice(0, 4)
+        }
     },
     methods: {
-        ...mapActions(['DOWN_ILLUSTRATIONS', 'DOWN_VIDEOS', 'DOWN_REVIEWS', 'DOWN_NEWS'])
+        ...mapActions(['DOWN_ILLUSTRATIONS', 'DOWN_VIDEOS', 'DOWN_REVIEWS', 'DOWN_NEWS']),
+        to_pairs(arr) {
+            let res = []
+            let size = 2
+
+            for (let i = 0; i < Math.ceil(arr.length / size); i++) {
+                res[i] = arr.slice((i * size), (i * size) + size);
+            }
+
+            if (res.length < arr.length) {
+                res[res.length - 1].push(arr.lastItem)
+            }
+            console.log(res)
+
+            return res
+        }
     },
     created() {
         this.DOWN_ILLUSTRATIONS();
         this.DOWN_VIDEOS();
         this.DOWN_REVIEWS();
         this.DOWN_NEWS();
-    },
+    }
+    ,
 }
 </script>
 

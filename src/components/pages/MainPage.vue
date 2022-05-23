@@ -58,15 +58,15 @@
         <div class="recs">
             <h2 class="recs-title">Рекомендации</h2>
             <div class="recs_catgs">
-                <div class="recs_catgs-catg active" @click="filter" id="all">Все</div>
-                <div class="recs_catgs-catg" @click="filter" id="ills">Иллюстрации</div>
-                <div class="recs_catgs-catg" @click="filter" id="videos">Видео</div>
-                <div class="recs_catgs-catg" @click="filter" id="news">Новости</div>
-                <div class="recs_catgs-catg" @click="filter" id="reviews">Обзоры</div>
-                <div class="recs_catgs-catg" @click="filter" id="ills">Стримы</div>
+                <div class="recs_catgs-catg active" @click="this.status = 'all'" id="all">Все</div>
+                <div class="recs_catgs-catg" @click="this.status = 'all'" :id="ills_id">Иллюстрации</div>
+                <div class="recs_catgs-catg" @click="this.status = 'all'" :id="videos_id">Видео</div>
+                <div class="recs_catgs-catg" @click="this.status = 'all'" :id="news_id">Новости</div>
+                <div class="recs_catgs-catg" @click="this.status = 'all'" :id="reviews_id">Обзоры</div>
             </div>
-            <div class="ills">
-                <div class="ills_line" v-for="item in ills" :key="item.id">
+            <div v-if="status === 'all' || status === ills_id" class="ills">
+                <span>clicked</span>
+                <div class="ills_line" v-for="item in (status === ills_id ? all_ills : status === 'all' ? ills : null)" :key="item.id">
                     <ContentCard :content_image_path="item[0].file"
                                  :author="item[0].author"
                                  :title="item[0].title"
@@ -83,7 +83,7 @@
                     />
                 </div>
             </div>
-            <div class="video">
+            <div v-if="status === 'all' || status === videos_id" class="video">
                 <div class="video_line" v-for="item in videos" :key="item.id">
                     <ContentCard :content_image_path="item[0].file"
                                  :author="item[0].author"
@@ -101,13 +101,13 @@
                     />
                 </div>
             </div>
-            <div class="mainNews">
+            <div v-if="status === 'all' || status === news_id" class="mainNews">
                 <NewsCard v-for="item in news" :key="item.id"
                           :content="item.content" :content_image_path="item.file"
                           :author="item.author" :title="item.title" :commends="item.likes"
                 />
             </div>
-            <div class="reviews">
+            <div v-if="status === 'all' || status === reviews_id" class="reviews">
                 <div class="reviews_line" v-for="item in reviews" :key="item.id">
                     <ContentCard :content_image_path="item[0].file"
                                  :author="item[0].author"
@@ -139,14 +139,23 @@ import {mapActions, mapGetters} from "vuex";
 export default {
     name: "MainPage",
     components: {NewsCard, ContentCard},
+    data() {
+        return {
+            ills_id: 'ills',
+            videos_id: 'videos',
+            news_id: 'news',
+            reviews_id: 'reviews',
+            status: 'all',
+        }
+    },
     computed: {
-        ...mapGetters({ills: 'PAIRS_ILLS', videos: 'PAIRS_VIDEOS', reviews: 'PAIRS_REVIEWS', news: 'NEWS'})
+        ...mapGetters({
+            ills: 'PAIRS_ILLS', videos: 'PAIRS_VIDEOS', reviews: 'PAIRS_REVIEWS', news: 'PAIRS_NEWS',
+            all_ills: 'ILLUSTRATIONS', all_videos: 'VIDEOS', all_reviews: 'REVIEWS', all_news: 'NEWS'
+        })
     },
     methods: {
-        ...mapActions(['DOWN_ILLUSTRATIONS', 'DOWN_VIDEOS', 'DOWN_REVIEWS', 'DOWN_NEWS']),
-        filter() {
-            ещвщ
-        }
+        ...mapActions(['DOWN_ILLUSTRATIONS', 'DOWN_VIDEOS', 'DOWN_REVIEWS', 'DOWN_NEWS'])
     },
     created() {
         this.DOWN_ILLUSTRATIONS();
@@ -154,11 +163,6 @@ export default {
         this.DOWN_REVIEWS();
         this.DOWN_NEWS();
     },
-    data() {
-        return {
-
-        }
-    }
 }
 </script>
 

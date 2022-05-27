@@ -64,7 +64,6 @@
                 <div class="recs_catgs-catg" @click="status = news_id" :id="news_id">Новости</div>
                 <div class="recs_catgs-catg" @click="status = reviews_id" :id="reviews_id">Обзоры</div>
             </div>
-            <span>{{ status }}</span>
             <div v-if="status === 'all' || status === ills_id" class="ills">
                 <div class="ills_line" v-for="item in ills" :key="item.id">
                     <ContentCard :content_image_path="item[0]['file']"
@@ -487,17 +486,21 @@ export default {
         width: 100%
         background-color: $gray
         padding: 15px
+        margin-bottom: 50px
 
         &_line
             display: flex
             justify-content: space-between
             align-items: flex-start
             width: 100%
+            padding-bottom: 25px
+            margin-bottom: 25px
+            border-bottom: 4px solid $orange
 
-            &:nth-child(1)
-                padding-bottom: 25px
-                margin-bottom: 25px
-                border-bottom: 4px solid $orange
+            &:last-child
+                padding-bottom: 0
+                margin-bottom: 0
+                border-bottom: 0
 
     & .video
         display: flex
@@ -505,18 +508,21 @@ export default {
         width: 100%
         background-color: $gray
         padding: 15px
-        margin-top: 50px
+        margin-bottom: 50px
 
         &_line
             display: flex
             justify-content: space-between
             align-items: flex-start
             width: 100%
+            padding-bottom: 25px
+            margin-bottom: 25px
+            border-bottom: 4px solid $orange
 
-            &:nth-child(1)
-                padding-bottom: 25px
-                margin-bottom: 25px
-                border-bottom: 4px solid $orange
+            &:last-child
+                padding-bottom: 0
+                margin-bottom: 0
+                border-bottom: 0
 
     & .mainNews
         display: flex
@@ -524,7 +530,7 @@ export default {
         width: 100%
         background-color: $gray
         padding: 15px
-        margin-top: 50px
+        margin-bottom: 50px
 
     & .reviews
         display: flex
@@ -532,7 +538,6 @@ export default {
         width: 100%
         background-color: $gray
         padding: 15px
-        margin-top: 50px
         margin-bottom: 130px
 
         &_line
@@ -540,11 +545,14 @@ export default {
             justify-content: space-between
             align-items: flex-start
             width: 100%
+            padding-bottom: 25px
+            margin-bottom: 25px
+            border-bottom: 4px solid $orange
 
-            &:nth-child(1)
-                padding-bottom: 25px
-                margin-bottom: 25px
-                border-bottom: 4px solid $orange
+            &:last-child
+                padding-bottom: 0
+                margin-bottom: 0
+                border-bottom: 0
 
 
 </style>

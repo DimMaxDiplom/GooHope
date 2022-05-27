@@ -100,16 +100,18 @@ export default {
             // TODO: Check passwords and other errors
             console.log(this.step)
             if (this.step === 1) {
-                axios.post('http://127.0.0.1:8080/register', {
-                    email: this.user.email,
-                    password: this.user.password
-                })
-                    .then(res => {
-                        console.log(res)
+                if (this.user.password === this.user.repeat_password) {
+                    axios.post('http://127.0.0.1:8080/register', {
+                        email: this.user.email,
+                        password: this.user.password
                     })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                        .then(res => {
+                            console.log(res)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                }
             }
             if (this.step <= 2) {
                 this.step += 1

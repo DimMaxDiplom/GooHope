@@ -97,8 +97,6 @@ export default {
             }
         },
         next_step() {
-            // TODO: Check passwords and other errors
-            console.log(this.step)
             if (this.step === 1) {
                 if (this.user.password === this.user.repeat_password) {
                     axios.post('http://127.0.0.1:8080/register', {
@@ -106,17 +104,47 @@ export default {
                         password: this.user.password
                     })
                         .then(res => {
-                            console.log(res)
+                            if (res.status === 200) {
+                                console.log(res.data)
+                            }
                         })
                         .catch(err => {
-                            console.log(err)
+                            console.log(err.response.data)
                         })
+                    this.step += 1
                 }
-            }
-            if (this.step <= 2) {
-                this.step += 1
-                if (this.step === 3)
-                    document.querySelector('.sign_up_left_btn').innerText = 'Зарегистрироваться'
+            } else if (this.step === 2) {
+                // TODO: 'ALL' | 'FaF' | 'JF' | 'OO'
+                axios.post('http://127.0.0.1:8000/api/profile', {
+                    user_id: 5,  // TODO: Change to user id from 1 step
+                    login: this.user.login,
+                    publicity: 'ALL'
+                })
+                    .then(res => {
+                        console.log(res)
+                        if (res.status === 201) {
+                            this.step += 1
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+            } else if (this.step === 3) {
+                document.querySelector('.sign_up_left_btn').innerText = 'Зарегистрироваться'
+
+                axios.post('http://127.0.0.1:8080/verify_email', {
+                    email: this.user.email,
+                    code: this.user.code
+                })
+                    .then(res => {
+                        console.log(res)
+                        if (res.status === 200) {
+                            this.$router.push(`/profile/${5}`)
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             }
         },
         prev_step() {

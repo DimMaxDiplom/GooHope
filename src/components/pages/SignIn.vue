@@ -55,7 +55,9 @@ export default {
                 password: this.user.password
             })
                 .then(res => {
-                    console.log(res)
+                    if (res.status.code === 200) {
+                        this.$router.push(`/profile/${5}`)
+                    }
                 })
                 .catch(err => {
                     console.log(err)

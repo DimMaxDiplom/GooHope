@@ -189,7 +189,6 @@ export default {
             if (res.length < arr.length) {
                 res[res.length - 1].push(arr.lastItem)
             }
-            console.log(res)
 
             return res
         }

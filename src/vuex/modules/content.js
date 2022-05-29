@@ -46,7 +46,7 @@ const actions = {
                 }
             })
             .catch(err => {
-                alert(err)
+                alert('illustrations\n' + err)
             })
     },
     DOWN_VIDEOS: async context => {
@@ -57,7 +57,7 @@ const actions = {
                 }
             })
             .catch(err => {
-                alert(err)
+                alert('videos\n' + err)
             })
     },
     DOWN_REVIEWS: async context => {
@@ -68,7 +68,7 @@ const actions = {
                 }
             })
             .catch(err => {
-                alert(err)
+                alert('reviews\n' + err)
             })
     },
     DOWN_NEWS: async context => {
@@ -79,7 +79,7 @@ const actions = {
                 }
             })
             .catch(err => {
-                alert(err)
+                alert('news\n' + err)
             })
     },
 }

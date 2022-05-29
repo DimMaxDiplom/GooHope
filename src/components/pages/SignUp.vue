@@ -7,39 +7,38 @@
             </div>
             <div class="sign_up_left_fields" v-if="step === 1"> <!-- Первый шаг -->
                 <Input label="Ваш Email" placeholder="Введите ваш email" type="email" @updateInput="on_update_input"
-                       field="email"
+                       field="email" :content="user.email"
                 />
                 <Input label="Пароль" placeholder="Введите ваш Пароль" type="password" @updateInput="on_update_input"
-                       field="password"
+                       field="password" :content="user.password"
                 />
-                <Input label="Пароль повторно" placeholder="Введите ваш Пароль повтороно" type="password"
-                       @updateInput="on_update_input"
-                       field="repeat_password"
+                <Input label="Пароль повторно" placeholder="Введите ваш Пароль повтороно" type="password" @updateInput="on_update_input"
+                       field="repeat_password" :content="user.repeat_password"
                 />
             </div> <!-- Первый шаг -->
             <div class="sign_up_left_fields" v-if="step === 2"> <!-- Второй шаг -->
                 <Input label="Ваше имя" placeholder="Введите ваше имя" type="text" @updateInput="on_update_input"
-                       field="name"
+                       field="name" :content="user.name"
                 />
                 <Input label="Логин" placeholder="Введите ваш логин" type="text" @updateInput="on_update_input"
-                       field="login"
+                       field="login" :content="user.login"
                 />
-                <Input label="Ваша страна" placeholder="Введите название вашей страны" type="text"
-                       @updateInput="on_update_input"
-                       field="country"
-                />
+                <Dropdown :options="types" :selected="user.type" v-on:updateOption="update_user_type" :placeholder="user.type.name"/>
             </div> <!-- Второй шаг -->
             <div class="sign_up_left_fields" v-if="step === 3"> <!-- Третий шаг -->
                 <Input label="код" placeholder="Введите код, который пришёл к вам на почту" type="text"
                        @updateInput="on_update_input"
-                       field="code"
+                       field="code" :content="user.code"
                 />
-                <span>Выслать повторно можно будет через: {{ time }}</span>
-                <div class="check_code locked">Проверить код</div>
+                <div class="check_code locked" @click="check_code">Проверить код</div>
             </div> <!-- Третий шаг -->
             <div class="sign_up_left_btns">
-                <div class="sign_up_left_btn" @click="next_step">
+                <div class="sign_up_left_btn" @click="next_step" v-if="step < 3">
                     Перейти к шагу №{{ step + 1 }}
+                    <vue-feather type="chevrons-right" class="sign_up_left_btn-icon" size="24"/>
+                </div>
+                <div class="sign_up_left_btn locked" @click="next_step" v-else>
+                    Зарегистрироваться
                     <vue-feather type="chevrons-right" class="sign_up_left_btn-icon" size="24"/>
                 </div>
                 <div class="sign_up_left_btn_back" v-if="step > 1" @click="prev_step">
@@ -65,27 +64,45 @@
 
 <script>
 import Input from "@/components/subpages/Input";
+import Dropdown from "@/components/subpages/Dropdown";
 import axios from "axios";
 
 export default {
     name: "SignUp",
-    components: {Input},
+    components: {Input, Dropdown},
     data() {
         return {
             step: 1,
             user: {
-                login: String,
-                password: String,
-                repeat_password: String,
-                name: String,
-                email: String,
-                country: String,
+                user_id: Number,
+                login: '',
+                password: '',
+                repeat_password: '',
+                name: '',
+                email: '',
+                type: {name: 'Пожалуйста, выбери тип профиля', value: 'ALL'},
                 code: ''
             },
-            time: '1.00'
+            types: [
+                {name: 'Открытый', value: 'ALL'},
+                {name: 'Только для друзей', value: 'FaF'},
+                {name: 'Друзья и друзья друзей', value: 'JF'},
+                {name: 'Приватный', value: 'OO'}
+            ],
+            errors: {
+                'too_short': ['Слишком короткий пароль'],
+                'email_in_use': ['Пользователь с такой почтой уже существует'],
+                'not_repeated': ['Пароли не совпадают'], // Local error
+                'incorrect_email': ['Проверьте правильность почты'],
+                'required': ['Вы забыли заполнить это поле'], // Local error
+                'wrong_verification_code': ['Неправильный код'],
+            }
         }
     },
     methods: {
+        update_user_type(payload) {
+            this.user.type = payload
+        },
         on_update_input(field, data) {
             this.user[field] = data
             if (field === 'code') {
@@ -105,51 +122,100 @@ export default {
                     })
                         .then(res => {
                             if (res.status === 200) {
-                                console.log(res.data)
+                                this.step += 1
                             }
                         })
                         .catch(err => {
-                            console.log(err.response.data)
+                            let res = err.response.data
+                            if (err.response.status === 400) {
+                                if (res.error === 'email_in_use') {
+                                    this.error(document.getElementById('email'), this.errors['email_in_use'])
+                                } else {
+                                    if (res.details) {
+                                        if (res.details.email) {
+                                            this.error(document.getElementById('email'), this.errors[res.details.email])
+                                        }
+                                        if (res.details.password) {
+                                            this.error(document.getElementById('password'), this.errors[res.details.password])
+                                        }
+                                    }
+                                }
+                            }
                         })
-                    this.step += 1
+                } else {
+                    ['password', 'repeat_password'].forEach(elem => this.error(document.getElementById(elem), this.errors['not_repeated']))
                 }
             } else if (this.step === 2) {
-                // TODO: 'ALL' | 'FaF' | 'JF' | 'OO'
-                axios.post('http://127.0.0.1:8000/api/profile', {
-                    user_id: 5,  // TODO: Change to user id from 1 step
-                    login: this.user.login,
-                    publicity: 'ALL'
-                })
-                    .then(res => {
-                        console.log(res)
-                        if (res.status === 201) {
-                            this.step += 1
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                if (!this.user.login || !this.user.name) {
+                    if (!this.user.login) {
+                        this.error(document.getElementById('login'), this.errors['required'])
+                    }
+                    if (!this.user.name) {
+                        this.error(document.getElementById('name'), this.errors['required'])
+                    }
+                } else {
+                    this.step += 1
+                }
             } else if (this.step === 3) {
-                document.querySelector('.sign_up_left_btn').innerText = 'Зарегистрироваться'
+                let elem = document.querySelector('.sign_up_left_btn')
+                if (!elem.classList.contains('locked')) {
+                    axios.post('http://127.0.0.1:8000/api/profile', {
+                        user_id: Number(this.user.user_id),
+                        login: this.user.login,
+                        publicity: this.user.type.value,
+                        name: this.user.name
+                    })
+                        .then(res => {
+                            if (res.status === 201) {
+                                this.$router.push(`/profile/${this.user.user_id}`)
+                            }
+                        })
+                        .catch(err => {
+                            console.log(err.response)
+                        })
+                }
+            }
+        },
+        error(root, message) {
+            let error_label = root.querySelector('.input-error')
+            let error_input = root.querySelector('input')
 
+            error_label.textContent = message
+            error_input.classList.add('error')
+        },
+        prev_step() {
+            if (this.step === 3) {
+                document.querySelector('.sign_up_left_btn').classList.remove('locked')
+            }
+            this.step--
+        },
+        check_code(event) {
+            let {target} = event
+            let elem = document.querySelector('.sign_up_left_btn')
+            // Кнопка проверки кода не залокана и кнопка следующего шага - залокана
+            if (!target.classList.contains('locked') && elem.classList.contains('locked')) {
                 axios.post('http://127.0.0.1:8080/verify_email', {
                     email: this.user.email,
                     code: this.user.code
                 })
                     .then(res => {
-                        console.log(res)
                         if (res.status === 200) {
-                            this.$router.push(`/profile/${5}`)
+                            elem.classList.remove('locked')
+
+                            this.user.user_id = res.data.user_id
+
+                            localStorage.setItem('token', res.data.token)
+                            localStorage.setItem('user_id', res.data.user_id)
                         }
                     })
                     .catch(err => {
-                        console.log(err)
+                        let res = err.response.data
+                        if (err.response.status === 400) {
+                            this.error(document.getElementById('email'), this.errors[res.error])
+                        }
                     })
             }
         },
-        prev_step() {
-            this.step--
-        }
     },
 }
 </script>
@@ -267,6 +333,18 @@ export default {
                 -ms-transform: scale(1.1)
                 -o-transform: scale(1.1)
                 transform: scale(1.1)
+
+            &.locked
+                background-color: $gray
+                color: $black
+
+                &:hover
+                    cursor: auto
+                    -webkit-transform: scale(1.0)
+                    -moz-transform: scale(1.0)
+                    -ms-transform: scale(1.0)
+                    -o-transform: scale(1.0)
+                    transform: scale(1.0)
 
             &-icon
                 padding: 21px

@@ -73,6 +73,7 @@ export default {
     data() {
         return {
             step: 1,
+            token: '',
             user: {
                 user_id: Number,
                 login: '',
@@ -167,6 +168,11 @@ export default {
                     })
                         .then(res => {
                             if (res.status === 201) {
+                                localStorage.setItem('token', this.token)
+                                localStorage.setItem('user_id', this.user.user_id)
+
+                                // TODO: Update header
+
                                 this.$router.push(`/profile/${this.user.user_id}`)
                             }
                         })
@@ -203,9 +209,7 @@ export default {
                             elem.classList.remove('locked')
 
                             this.user.user_id = res.data.user_id
-
-                            localStorage.setItem('token', res.data.token)
-                            localStorage.setItem('user_id', res.data.user_id)
+                            this.token = res.data.token
                         }
                     })
                     .catch(err => {

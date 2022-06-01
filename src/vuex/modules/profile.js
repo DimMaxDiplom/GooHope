@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const host = 'http://127.0.0.1:8000/user'
+const host = 'http://127.0.0.1:8000/api/profile'
 
 const state = {
     profile_friends: [],
@@ -9,18 +9,20 @@ const state = {
 }
 const getters = {
     FRIENDS_LIST: state => {
-        return {
-            'friends': state.profile_friends.map(elem => {
-                return {
-                    'title': 'ReF0iL', // TODO: change to profile.login
-                    // eslint-disable-next-line no-constant-condition
-                    'color': elem.status ? 'green' : 'red',
-                    // eslint-disable-next-line no-constant-condition
-                    'content': elem.status ? 'Online' : 'Последний раз в сети: 5ч 37мин назад' // TODO: change to profile.updated
-                }
-            }),
-            'friends_count': state.profile_friends.length
-        }
+        return state.profile_friends
+        // return {
+        //     'friends': state.profile_friends.map(elem => {
+        //         return {
+        //             'title': elem.login,
+        //             // eslint-disable-next-line no-constant-condition
+        //             'color': elem.status ? 'green' : 'red',
+        //             // eslint-disable-next-line no-constant-condition
+        //             'content': elem.status ? 'Online' : 'Последний раз в сети: 5ч 37мин назад', // TODO: change to profile.updated
+        //             'user_id': elem.user_id
+        //         }
+        //     }),
+        //     'friends_count': state.profile_friends.length
+        // }
     },
     SOCIETIES_LIST: state => {
         return {
@@ -30,6 +32,9 @@ const getters = {
     },
     USER: state => {
         return state.user
+    },
+    PROFILE_STATUS: state => {
+        return state.user.hidden
     }
 }
 const mutations = {
@@ -47,9 +52,10 @@ const mutations = {
 }
 const actions = {
     UPDATE_PROFILE: async (context, profile_id) => {
-        axios.get(`${host}`, {
+        axios.get(`${host}/${profile_id}`, {
             params: {
-                id: profile_id
+                user_id: localStorage.user_id,
+                token: localStorage.token
             }
         })
             .then(res => {

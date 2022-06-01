@@ -2,6 +2,7 @@
     <div class="login">
         <div class="login_left">
             <div class="login_left-title">Авторизация</div>
+            <div id="error"></div>
             <div class="login_left_fields">
                 <Input label="email" placeholder="Введите ваш Email адрес" type="email" @updateInput="onUpdateInput"
                        field="email"
@@ -42,7 +43,10 @@ export default {
             user: {
                 email: String,
                 password: String
-            }
+            },
+            errors: {
+                'wrong_credentials': ['Неправильный почта или пароль']
+            },
         }
     },
     methods: {
@@ -50,17 +54,27 @@ export default {
             this.user[field] = data
         },
         try_login() {
-            axios.post('http://127.0.0.1:8000/login', {
+            axios.post('http://127.0.0.1:8080/login', {
                 email: this.user.email,
                 password: this.user.password
             })
                 .then(res => {
-                    if (res.status.code === 200) {
-                        this.$router.push(`/profile/${5}`)
+                    console.log(res)
+                    if (res.status === 200) {
+                        localStorage.setItem('user_id', res.data.user_id)
+                        localStorage.setItem('token', res.data.token)
+
+                        // TODO: Update header
+                        // this.$root.$refs.Header.force_update()
+
+                        this.$router.push(`/profile/${res.data.user_id}`)
                     }
                 })
                 .catch(err => {
                     console.log(err)
+                    let res = err.response.data.error
+                    document.getElementById('error').textContent = this.errors[res]
+                    document.querySelectorAll('input').forEach(elem => elem.classList.add('error'))
                 })
         },
     },
@@ -81,8 +95,16 @@ export default {
         height: 615px
         padding: 55px 80px
 
+        & #error
+            color: $red
+            +medium
+            font-size: 12px
+            text-transform: uppercase
+            height: 12px
+            margin-bottom: 28px
+
         &-title
-            margin-bottom: 50px
+            margin-bottom: 10px
             color: $black
             text-transform: uppercase
             font-size: 24px

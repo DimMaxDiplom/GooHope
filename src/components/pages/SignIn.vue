@@ -45,7 +45,7 @@ export default {
                 password: String
             },
             errors: {
-                'wrong_credentials': ['Неправильный почта или пароль']
+                'wrong_credentials': ['Неправильные почта или пароль']
             },
         }
     },
@@ -63,9 +63,6 @@ export default {
                     if (res.status === 200) {
                         localStorage.setItem('user_id', res.data.user_id)
                         localStorage.setItem('token', res.data.token)
-
-                        // TODO: Update header
-                        // this.$root.$refs.Header.force_update()
 
                         this.$router.push(`/profile/${res.data.user_id}`)
                     }

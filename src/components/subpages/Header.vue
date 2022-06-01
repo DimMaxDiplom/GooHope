@@ -10,9 +10,9 @@
             <router-link to="/" class="header_nav-elem">Поддержка</router-link>
         </nav>
         <div class="header_side">
-            <router-link to="/sign_in" class="header_side-login" v-if="token === 'undefined'">Войти</router-link>
+            <router-link to="/sign_in" class="header_side-login" v-if="!token">Войти</router-link>
             <router-link :to="`/profile/${user_id}`" class="header_side-login" v-else>Профиль</router-link>
-            <div class="header_side-download" v-if="token === 'undefined'">Установить <span>GooHope</span></div>
+            <div class="header_side-download" v-if="!token">Установить <span>GooHope</span></div>
             <div class="header_side-logout" v-else @click="logout">Выйти</div>
         </div>
     </div>
@@ -26,15 +26,9 @@ export default {
         main() {
             this.$router.push('/')
         },
-        force_update() {
-            console.log('g')
-            this.$forceUpdate()
-        },
         logout() {
             localStorage.removeItem('token')
             localStorage.removeItem('user_id')
-
-            this.force_update()
 
             this.main()
         }
@@ -48,8 +42,15 @@ export default {
     mounted() {
         this.token = localStorage.token
         this.user_id = localStorage.user_id
+    },
 
-        // this.$root.$refs.Header = this
+    watch: {
+        $route() {
+            if (localStorage.user_id && localStorage.token) {
+                this.token = localStorage.token
+                this.user_id = localStorage.user_id
+            }
+        }
     }
 }
 </script>

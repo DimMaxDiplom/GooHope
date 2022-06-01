@@ -171,8 +171,6 @@ export default {
                                 localStorage.setItem('token', this.token)
                                 localStorage.setItem('user_id', this.user.user_id)
 
-                                // TODO: Update header
-
                                 this.$router.push(`/profile/${this.user.user_id}`)
                             }
                         })

@@ -4,6 +4,7 @@ import SignIn from "@/components/pages/SignIn";
 import SignUp from "@/components/pages/SignUp";
 import ProfilePage from "@/components/pages/ProfilePage";
 import DialogsPage from "@/components/pages/DialogsPage";
+import ProfileEditPage from "@/components/pages/ProfileEditPage";
 
 const DEFAULT_TITLE = 'GooHope'
 
@@ -32,6 +33,11 @@ const routes = [
         path: "/dialogs",
         name: DialogsPage.name,
         component: DialogsPage
+    },
+    {
+        path: "/profile/edit",
+        name: ProfileEditPage.name,
+        component: ProfileEditPage
     }
 ];
 
@@ -45,7 +51,8 @@ router.beforeEach((to, from, next) => {
         'SignIn': 'Вход',
         'SignUp': 'Регистрация',
         'ProfilePage': 'Профиль',
-        'DialogsPage': 'Диалоги'
+        'DialogsPage': 'Диалоги',
+        'ProfileEditPage': 'Редактирование профиля',
     };
 
     // Заголовки для отдельных страниц
@@ -55,7 +62,7 @@ router.beforeEach((to, from, next) => {
     document.title = text;
 
     // удаление футера на некоторых страницах
-    const non_footer_pages = [SignIn.name, SignUp.name, ProfilePage.name, DialogsPage.name];
+    const non_footer_pages = [SignIn.name, SignUp.name, ProfilePage.name, DialogsPage.name, ProfileEditPage.name];
     if (non_footer_pages.includes(to.name)) {
         document.querySelector('.footer').style.display = 'none';
     } else {

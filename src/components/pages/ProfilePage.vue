@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="profile_main_right">
-                <div class="profile_main_right-edit" v-if="user.hidden">Редактировать профиль</div>
+                <div class="profile_main_right-edit" v-if="user.hidden" @click="edit">Редактировать профиль</div>
                 <div class="profile_main_right_ach">
                     <div class="profile_main_right_ach-elem" v-for="elem in achs.slice(0, 4)" :key="elem.id"></div>
                 </div>
@@ -76,6 +76,7 @@ import GameCard from "@/components/subpages/GameCard";
 import ListBar from "@/components/subpages/ListBar";
 import CommentBar from "@/components/subpages/CommentBar";
 import {mapActions, mapGetters} from "vuex";
+import ProfileEditPage from "@/components/pages/ProfileEditPage";
 
 export default {
     name: "ProfilePage",
@@ -167,11 +168,11 @@ export default {
     },
     methods: {
         ...mapActions(['UPDATE_PROFILE']),
-        test() {
-            console.log(this.friends)
-        },
         open_profile(user) {
             this.$router.push(`/profile/${user.user_id}`)
+        },
+        edit() {
+            this.$router.push({name: ProfileEditPage.name})
         }
     },
     mounted() {

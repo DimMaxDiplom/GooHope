@@ -2,10 +2,9 @@
     <div class="bar">
         <div class="bar-image"></div>
         <div class="bar_info">
-            <div class="bar_info-title">{{ tile.login }}</div>
-            <div class="bar_info-content" :class="tile.status ? 'green' : 'red'">{{
-                    tile.status ? 'Online' : 'Последний раз в сети: 5ч 37мин назад'
-                }}
+            <div class="bar_info-title">{{ title }}</div>
+            <div class="bar_info-content" :class="color ? 'green' : 'red'">
+                {{ content ? content : 'Последний раз в сети: 5ч 37мин назад' }}
             </div>
         </div>
     </div>
@@ -14,11 +13,34 @@
 <script>
 export default {
     name: "ListBar",
+    data() {
+        return {
+            title: '',
+            content: '',
+            color: ''
+        }
+    },
     props: {
         tile: {
-            title: String,
-            content: String,
-            color: String
+            type: Object,
+            default: null
+        },
+        group: {
+            type: Object,
+            default: null
+        }
+    },
+    mounted() {
+        if (this.tile !== null) {
+            this.title = this.tile.login
+            this.content = this.tile.status
+            if (this.tile.status === true) {
+                this.content = 'Online'
+                this.color = 'green'
+            }
+        } else if (this.group !== null) {
+            this.title = this.group.title
+            this.content = ' '
         }
     }
 }

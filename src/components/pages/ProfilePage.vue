@@ -42,7 +42,7 @@
                 <div class="profile_main_right_friends">
                     <div class="profile_main_right_friends_title">
                         <div class="profile_main_right_friends_title-title">Список друзей</div>
-                        <div class="profile_main_right_friends_title-num">({{ friends.length }})</div>
+                        <div class="profile_main_right_friends_title-num" @click="test(friends)">({{ friends.length }})</div>
                     </div>
                     <div class="profile_main_right_friends_list">
                         <ListBar v-for="friend in friends" :key="friend.id" :tile="friend" @click="open_profile(friend)"/>
@@ -51,10 +51,10 @@
                 <div class="profile_main_right_groups">
                     <div class="profile_main_right_groups_title">
                         <div class="profile_main_right_groups_title-title">Список групп</div>
-                        <div class="profile_main_right_groups_title-num">({{ groups.groups_count }})</div>
+                        <div class="profile_main_right_groups_title-num" @click="test(groups)">({{ groups.length }})</div>
                     </div>
                     <div class="profile_main_right_groups_list">
-                        <ListBar v-for="group in groups.groups" :key="group.id" :tile="group"/>
+                        <ListBar v-for="group in groups" :key="group.id" :group="group" @click="open_group(group)"/>
                     </div>
                 </div>
             </div>
@@ -170,6 +170,12 @@ export default {
         ...mapActions(['UPDATE_PROFILE']),
         open_profile(user) {
             this.$router.push(`/profile/${user.user_id}`)
+        },
+        open_group(group) {
+            console.log(group)
+        },
+        test(data) {
+            console.log(data)
         },
         edit() {
             this.$router.push({name: ProfileEditPage.name})

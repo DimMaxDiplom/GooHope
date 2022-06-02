@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const host = 'http://127.0.0.1:8000/api/profile'
+const host = 'http://127.0.0.1:8000/api'
 
 const state = {
     profile_friends: [],
@@ -25,10 +25,7 @@ const getters = {
         // }
     },
     SOCIETIES_LIST: state => {
-        return {
-            'groups': state.profile_societies,
-            'groups_count': state.profile_societies.length
-        }
+        return state.profile_societies
     },
     USER: state => {
         return state.user
@@ -52,7 +49,7 @@ const mutations = {
 }
 const actions = {
     UPDATE_PROFILE: async (context, profile_id) => {
-        axios.get(`${host}/${profile_id}`, {
+        axios.get(`${host}/profile/${profile_id}`, {
             params: {
                 user_id: localStorage.user_id,
                 token: localStorage.token
@@ -60,8 +57,7 @@ const actions = {
         })
             .then(res => {
                 if (res.status === 200) {
-                    context.commit('UPDATE_FRIENDS', res.data.friends);
-                    context.commit('UPDATE_SOCIETIES', res.data.societies)
+                    context.commit('UPDATE_FRIENDS', res.data.friends)
                     context.commit('UPDATE_PROFILE_INFO', {
                             'profile': res.data.user,
                             'is_hidden': res.data.hidden
@@ -70,6 +66,18 @@ const actions = {
             })
             .catch(err => {
                 alert(err)
+            })
+
+        axios.get(`${host}/societies`, {
+            params: {
+                user_id: profile_id,
+                token: localStorage.token
+            }
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    context.commit('UPDATE_SOCIETIES', res.data)
+                }
             })
     }
 }

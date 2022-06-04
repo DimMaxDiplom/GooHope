@@ -5,6 +5,7 @@ import SignUp from "@/components/pages/SignUp";
 import ProfilePage from "@/components/pages/ProfilePage";
 import DialogsPage from "@/components/pages/DialogsPage";
 import ProfileEditPage from "@/components/pages/ProfileEditPage";
+import GamePage from "@/components/pages/GamePage";
 
 const DEFAULT_TITLE = 'GooHope'
 
@@ -38,6 +39,11 @@ const routes = [
         path: "/profile/edit",
         name: ProfileEditPage.name,
         component: ProfileEditPage
+    },
+    {
+        path: "/game/:game_id",
+        name: GamePage.name,
+        component: GamePage
     }
 ];
 
@@ -53,6 +59,7 @@ router.beforeEach((to, from, next) => {
         'ProfilePage': 'Профиль',
         'DialogsPage': 'Диалоги',
         'ProfileEditPage': 'Редактирование профиля',
+        'GamePage': 'Какая-то игра',
     };
 
     // Заголовки для отдельных страниц
@@ -62,7 +69,7 @@ router.beforeEach((to, from, next) => {
     document.title = text;
 
     // удаление футера на некоторых страницах
-    const non_footer_pages = [SignIn.name, SignUp.name, ProfilePage.name, DialogsPage.name, ProfileEditPage.name];
+    const non_footer_pages = [SignIn.name, SignUp.name, ProfilePage.name, DialogsPage.name, ProfileEditPage.name, GamePage.name];
     if (non_footer_pages.includes(to.name)) {
         document.querySelector('.footer').style.display = 'none';
     } else {

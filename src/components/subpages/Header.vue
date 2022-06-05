@@ -4,9 +4,9 @@
             <img src="@/assets/logo.png" alt="" class="header_logo-logo" @click="main">
         </div>
         <nav class="header_nav">
-            <router-link to="/" class="header_nav-elem">Магазин</router-link>
+            <router-link to="/games" class="header_nav-elem">Магазин</router-link>
             <router-link to="/" class="header_nav-elem">Сообщество</router-link>
-            <router-link to="/" class="header_nav-elem">О GooHope</router-link>
+            <router-link to="/about" class="header_nav-elem">О GooHope</router-link>
             <router-link to="/" class="header_nav-elem">Поддержка</router-link>
         </nav>
         <div class="header_side">

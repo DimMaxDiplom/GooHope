@@ -6,6 +6,7 @@ import ProfilePage from "@/components/pages/ProfilePage";
 import DialogsPage from "@/components/pages/DialogsPage";
 import ProfileEditPage from "@/components/pages/ProfileEditPage";
 import GamePage from "@/components/pages/GamePage";
+import GameListPage from "@/components/pages/GameListPage";
 
 const DEFAULT_TITLE = 'GooHope'
 
@@ -44,6 +45,11 @@ const routes = [
         path: "/game/:game_id",
         name: GamePage.name,
         component: GamePage
+    },
+    {
+        path: "/games",
+        name: GameListPage.name,
+        component: GameListPage
     }
 ];
 
@@ -60,6 +66,7 @@ router.beforeEach((to, from, next) => {
         'DialogsPage': 'Диалоги',
         'ProfileEditPage': 'Редактирование профиля',
         'GamePage': 'Какая-то игра',
+        'GameListPage': 'Список игр'
     };
 
     // Заголовки для отдельных страниц

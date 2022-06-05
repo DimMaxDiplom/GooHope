@@ -65,10 +65,11 @@
                     <img src="" alt="" class="reviews_card_img-img">
                 </div>
                 <div class="reviews_card_content">
-                    <div class="reviews_card_content-login">ReF0iL</div>
+                    <div class="reviews_card_content-login">{{ "ReF0iL" }}</div>
                     <div class="reviews_card_content-content">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tristique mi et finibus placerat. Suspendisse venenatis id
-                        libero eget sagittis. Fusce luctus, turpis ut mollis placerat, arcu eros volutpat odio, at porta dolor dolor in ligula. Aliquam
+                        libero eget sagittis. Fusce luctus, turpis ut mollis placerat, arcu eros volutpat odio, at porta dolor dolor in ligula.
+                        Aliquam
                         vulputate faucibus vestibulum. Nam pellentesque lorem no
                     </div>
                 </div>
@@ -297,7 +298,6 @@ export default {
                     &::before
                         left: -6px
 
-
         &_btns
             display: flex
             justify-content: space-between
@@ -382,6 +382,7 @@ export default {
                         font-size: 18px
                         +light
                         margin: 5px 0
+
     .reviews
         display: flex
         justify-content: flex-start
@@ -390,6 +391,7 @@ export default {
         margin-left: 15px
         width: 1250px
         margin-bottom: 25px
+
         &-title
             text-align: left
             border-bottom: 3px solid $orange
@@ -399,6 +401,7 @@ export default {
             color: $white
             margin-bottom: 25px
             padding-bottom: 5px
+
         &_card
             background-color: $trs_gray
             width: 100%
@@ -408,17 +411,21 @@ export default {
             display: flex
             justify-content: flex-start
             align-items: center
+
             &_img
                 width: 130px
                 height: 130px
                 background-color: $white
                 margin-left: 5px
+
                 &-img
+
             &_content
                 display: flex
                 flex-direction: column
                 align-items: flex-start
                 margin-left: 15px
+
                 &-login
                     margin-bottom: 10px
                     margin-top: 10px
@@ -427,12 +434,11 @@ export default {
                     font-size: 20px
                     border-bottom: 3px solid $orange
                     width: 125px
+
                 &-content
                     height: 110px
                     width: 1000px
                     color: $white
                     +light
                     font-size: 16px
-
-
 </style>
